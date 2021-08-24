@@ -1,0 +1,8 @@
+{
+  "name": "nail-service-management",
+  "version": "1.0.0",
+  "main": "index.js",
+  "repository": "git@github.com:lucas-barbosa/nail-service-management.git",
+  "author": "Lucas Barbosa <barbosa.lucash@gmail.com>",
+  "license": "MIT"
+}
