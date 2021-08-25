@@ -1,4 +1,4 @@
 export type ServiceType = {
-  id: string;
+  id?: string;
   name: string
 };
