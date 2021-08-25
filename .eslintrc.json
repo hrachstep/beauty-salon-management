@@ -52,5 +52,10 @@
         "alphabetize": { "order": "asc", "ignoreCase": true }
       }
     ]
+  },
+  "settings": {
+    "import/resolver": {
+        "typescript": {}
+    }
   }
 }
