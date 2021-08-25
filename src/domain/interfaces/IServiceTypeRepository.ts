@@ -5,4 +5,5 @@ export interface IServiceTypeRepository {
   update(payload: ServiceType): Promise<ServiceType>;
   findAll(): Promise<ServiceType[]>;
   findById(): Promise<ServiceType>;
+  findByName(name: string): Promise<ServiceType>;
 }
