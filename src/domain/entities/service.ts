@@ -1,11 +1,12 @@
-import ServiceType from './service-type';
+import { ServiceType } from './service-type';
 
-type Service = {
+export type Service = {
   id: string;
   customer: string;
-  price: string;
   servicesDone: ServiceType[];
   date: Date;
 }
 
-export default Service;
+export type ServiceWithPrice = Service & {
+  price: number;
+}
