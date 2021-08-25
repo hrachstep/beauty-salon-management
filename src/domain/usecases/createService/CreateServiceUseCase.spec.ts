@@ -10,7 +10,7 @@ describe('Create Service', () => {
     repository = {
       create: jest.fn((x) => Promise.resolve(x)),
       update: null,
-      delete: null,
+      destroy: null,
       findAll: null,
       findById: null,
       findByMonth: null,

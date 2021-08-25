@@ -23,7 +23,7 @@ describe('Create Services Pack', () => {
     servicesPackRepository = {
       create: jest.fn((x) => Promise.resolve(x)),
       update: null,
-      delete: null,
+      destroy: null,
       findAll: null,
       findById: null,
       findByMonth: null,
@@ -73,6 +73,7 @@ describe('Create Services Pack', () => {
         quantity: 0,
         serviceType: servicesType[1],
       }],
+      services: [],
     });
 
     expect(pack.servicesCount.filter((item) => item.quantity < 1)).toHaveLength(0);
