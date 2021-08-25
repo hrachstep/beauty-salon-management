@@ -1,4 +1,4 @@
-import { ServicesPack } from '../entities/ServicesPack';
+import { ServicesPack } from '@domain/entities/ServicesPack';
 
 export interface IServicesPackRepository {
   create(payload: ServicesPack): Promise<ServicesPack>;

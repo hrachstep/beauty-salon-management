@@ -1,4 +1,4 @@
-import { ServiceType } from '../entities/ServiceType';
+import { ServiceType } from '@domain/entities/ServiceType';
 
 export interface IServiceTypeRepository {
   create(payload: ServiceType): Promise<ServiceType>;

@@ -1,7 +1,7 @@
 import { v4 as uuidV4 } from 'uuid';
 
-import { Service } from '../../entities/Service';
-import { IServiceRepository } from '../../interfaces/IServiceRepository';
+import { Service } from '@domain/entities/Service';
+import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
 
 export class CreateServiceUseCase {
   constructor(private servicesRepository: IServiceRepository) {}

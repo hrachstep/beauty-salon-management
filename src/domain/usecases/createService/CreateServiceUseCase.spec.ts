@@ -1,4 +1,5 @@
-import { IServiceRepository } from '../../interfaces/IServiceRepository';
+import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
+
 import { CreateServiceUseCase } from './CreateServiceUseCase';
 
 describe('Create Service', () => {
