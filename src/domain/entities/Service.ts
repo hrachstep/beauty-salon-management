@@ -1,7 +1,7 @@
-import { ServiceType } from './service-type';
+import { ServiceType } from './ServiceType';
 
 export type Service = {
-  id: string;
+  id?: string;
   customer: string;
   servicesDone: ServiceType[];
   date: Date;
