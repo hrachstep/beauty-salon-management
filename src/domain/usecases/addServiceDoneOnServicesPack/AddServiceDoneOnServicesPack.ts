@@ -3,8 +3,7 @@ import { v4 as uuidV4 } from 'uuid';
 import { Service } from '@domain/entities/Service';
 import { ServicesPack } from '@domain/entities/ServicesPack';
 import { IServicesPackRepository } from '@domain/interfaces/IServicesPackRepository';
-
-import { ApiError } from '../../../shared/errors/ApiError';
+import { ApiError } from '@shared/errors/ApiError';
 
 export class AddServiceDoneOnServicesPack {
   constructor(private servicesPackRepository: IServicesPackRepository) {}

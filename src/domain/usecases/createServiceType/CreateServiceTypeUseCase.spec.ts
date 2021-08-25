@@ -1,6 +1,6 @@
 import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
+import { ApiError } from '@shared/errors/ApiError';
 
-import { ApiError } from '../../../shared/errors/ApiError';
 import { CreateServiceTypeUseCase } from './CreateServiceTypeUseCase';
 
 const mockServiceType = {

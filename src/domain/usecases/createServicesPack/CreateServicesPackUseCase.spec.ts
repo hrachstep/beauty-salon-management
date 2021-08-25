@@ -1,7 +1,7 @@
 import { ServiceType } from '@domain/entities/ServiceType';
 import { IServicesPackRepository } from '@domain/interfaces/IServicesPackRepository';
+import { ApiError } from '@shared/errors/ApiError';
 
-import { ApiError } from '../../../shared/errors/ApiError';
 import { CreateServicesPackUseCase } from './CreateServicesPackUseCase';
 
 describe('Create Services Pack', () => {

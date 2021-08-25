@@ -12,7 +12,8 @@
     "resolveJsonModule": true,
     "baseUrl": "./src",
     "paths": {
-      "@domain/*": ["domain/*"]
+      "@domain/*": ["domain/*"],
+      "@shared/*": ["shared/*"]
     }
   }
 }

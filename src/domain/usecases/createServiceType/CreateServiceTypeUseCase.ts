@@ -2,8 +2,7 @@ import { v4 as uuidV4 } from 'uuid';
 
 import { ServiceType } from '@domain/entities/ServiceType';
 import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
-
-import { ApiError } from '../../../shared/errors/ApiError';
+import { ApiError } from '@shared/errors/ApiError';
 
 export class CreateServiceTypeUseCase {
   constructor(private serviceTypeRepository: IServiceTypeRepository) {}

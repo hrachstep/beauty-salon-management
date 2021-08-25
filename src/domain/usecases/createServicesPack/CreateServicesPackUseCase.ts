@@ -2,8 +2,7 @@ import { v4 as uuidV4 } from 'uuid';
 
 import { ServicesPack } from '@domain/entities/ServicesPack';
 import { IServicesPackRepository } from '@domain/interfaces/IServicesPackRepository';
-
-import { ApiError } from '../../../shared/errors/ApiError';
+import { ApiError } from '@shared/errors/ApiError';
 
 export class CreateServicesPackUseCase {
   constructor(private servicesPackRepository: IServicesPackRepository) {}

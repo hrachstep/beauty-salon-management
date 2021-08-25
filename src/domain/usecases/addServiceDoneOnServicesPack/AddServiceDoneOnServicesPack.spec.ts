@@ -1,7 +1,7 @@
 import { ServicesPack } from '@domain/entities/ServicesPack';
 import { IServicesPackRepository } from '@domain/interfaces/IServicesPackRepository';
+import { ApiError } from '@shared/errors/ApiError';
 
-import { ApiError } from '../../../shared/errors/ApiError';
 import { AddServiceDoneOnServicesPack } from './AddServiceDoneOnServicesPack';
 
 describe('Add Service Done on Services Pack', () => {
