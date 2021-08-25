@@ -1,8 +1,8 @@
-import { Service } from './service';
-import { ServiceType } from './service-type';
+import { Service } from './Service';
+import { ServiceType } from './ServiceType';
 
 export type ServicesPack = {
-  id: string;
+  id?: string;
   customer: string;
   services?: Service[];
   servicesCount: {
