@@ -7,8 +7,12 @@
     "allowJs": true,
     "experimentalDecorators": true,
     "emitDecoratorMetadata": true,
-    "skipLibCheck": true,          
+    "skipLibCheck": true,
     "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "baseUrl": "./src",
+    "paths": {
+      "@domain/*": ["domain/*"]
+    }
   }
 }
