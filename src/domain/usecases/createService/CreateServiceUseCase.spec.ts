@@ -1,4 +1,5 @@
 import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
+import { ApiError } from '@shared/errors/ApiError';
 
 import { CreateServiceUseCase } from './CreateServiceUseCase';
 
@@ -23,7 +24,7 @@ describe('Create Service', () => {
     const service = await usecase.execute({
       customer: 'Débora',
       date: new Date(),
-      servicesDone: [],
+      servicesDoneIds: ['5567'],
     });
 
     expect(service).toHaveProperty('id');
@@ -34,9 +35,19 @@ describe('Create Service', () => {
     const service = await usecase.execute({
       customer: 'Débora',
       date: new Date(),
-      servicesDone: [],
+      servicesDoneIds: ['5892'],
     });
 
     expect(repository.create).toBeCalledWith(service);
+  });
+
+  it('should not create object without services done ids', async () => {
+    expect(async () => {
+      await usecase.execute({
+        customer: 'Débora',
+        date: new Date(),
+        servicesDoneIds: [],
+      });
+    }).rejects.toBeInstanceOf(ApiError);
   });
 });

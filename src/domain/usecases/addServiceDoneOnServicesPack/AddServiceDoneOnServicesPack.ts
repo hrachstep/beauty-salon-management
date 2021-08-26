@@ -10,9 +10,9 @@ export class AddServiceDoneOnServicesPack {
 
   async execute(packId: string, {
     date,
-    servicesDone,
+    servicesDoneIds,
   }: Service): Promise<ServicesPack> {
-    if (!servicesDone?.length) throw new ApiError('No Services Done passed!');
+    if (!servicesDoneIds?.length) throw new ApiError('No Services Done passed!');
 
     const pack = await this.servicesPackRepository.findById(packId);
     if (!pack) throw new ApiError('No Services Pack found with this id!');
@@ -32,7 +32,7 @@ export class AddServiceDoneOnServicesPack {
         {
           id: uuidV4(),
           date,
-          servicesDone,
+          servicesDoneIds,
           customer: pack.customer,
         },
       ],

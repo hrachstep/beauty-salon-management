@@ -46,12 +46,7 @@ describe('Add Service Done on Services Pack', () => {
   it('should add a service on a existent services pack', async () => {
     const pack = await usecase.execute('123', {
       date: new Date(),
-      servicesDone: [
-        {
-          name: 'Manicure',
-          id: '1234',
-        },
-      ],
+      servicesDoneIds: ['1234'],
     });
 
     expect(pack.id).toBeTruthy();
@@ -63,8 +58,7 @@ describe('Add Service Done on Services Pack', () => {
     expect(async () => {
       await usecase.execute('123', {
         date: new Date(),
-        servicesDone: [
-        ],
+        servicesDoneIds: [],
       });
     }).rejects.toBeInstanceOf(ApiError);
   });
@@ -73,10 +67,10 @@ describe('Add Service Done on Services Pack', () => {
     const newMockPack: ServicesPack = {
       ...mockPack,
       services: [
-        { date: new Date(), servicesDone: [{ name: 'Manicure' }, { name: 'Pedicure' }] },
-        { date: new Date(), servicesDone: [{ name: 'Manicure' }] },
-        { date: new Date(), servicesDone: [{ name: 'Manicure' }, { name: 'Pedicure' }] },
-        { date: new Date(), servicesDone: [{ name: 'Manicure' }] },
+        { date: new Date(), servicesDoneIds: ['5689', '1234'] },
+        { date: new Date(), servicesDoneIds: ['5689'] },
+        { date: new Date(), servicesDoneIds: ['5689', '1234'] },
+        { date: new Date(), servicesDoneIds: ['5689'] },
       ],
     };
 
@@ -86,12 +80,7 @@ describe('Add Service Done on Services Pack', () => {
     expect(async () => {
       await usecase.execute('123', {
         date: new Date(),
-        servicesDone: [
-          {
-            name: 'Manicure',
-            id: '1234',
-          },
-        ],
+        servicesDoneIds: ['5689'],
       });
     }).rejects.toBeInstanceOf(ApiError);
   });
