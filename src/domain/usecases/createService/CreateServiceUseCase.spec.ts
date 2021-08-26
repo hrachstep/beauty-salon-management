@@ -25,6 +25,7 @@ describe('Create Service', () => {
       customer: 'Débora',
       date: new Date(),
       servicesDoneIds: ['5567'],
+      price: 25,
     });
 
     expect(service).toHaveProperty('id');
@@ -36,6 +37,7 @@ describe('Create Service', () => {
       customer: 'Débora',
       date: new Date(),
       servicesDoneIds: ['5892'],
+      price: 45,
     });
 
     expect(repository.create).toBeCalledWith(service);
@@ -47,7 +49,19 @@ describe('Create Service', () => {
         customer: 'Débora',
         date: new Date(),
         servicesDoneIds: [],
+        price: 45,
       });
     }).rejects.toBeInstanceOf(ApiError);
+  });
+
+  it('should have property isFromPack equals to null', async () => {
+    const service = await usecase.execute({
+      customer: 'Débora',
+      date: new Date(),
+      servicesDoneIds: ['5892'],
+      price: 45,
+    });
+
+    expect(service.isFromPack).toBe(false);
   });
 });

@@ -6,9 +6,6 @@ export type Service = {
   servicesDoneIds: string[];
   servicesDone?: ServiceType[];
   date: Date;
-}
-
-export type ServiceWithPrice = Service & {
-  customer: string;
-  price: number;
+  price?: number;
+  isFromPack?: boolean
 }
