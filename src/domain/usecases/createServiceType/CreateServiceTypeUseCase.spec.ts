@@ -17,6 +17,7 @@ describe('Create Service Type', () => {
       create: jest.fn((x) => Promise.resolve(x)),
       findAll: null,
       findById: null,
+      findByIds: null,
       findByName: jest.fn(() => Promise.resolve(null)),
       update: null,
     };

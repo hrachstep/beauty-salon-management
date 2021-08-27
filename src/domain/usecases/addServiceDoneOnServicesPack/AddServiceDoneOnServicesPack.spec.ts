@@ -1,12 +1,16 @@
 import { ServicesPack } from '@domain/entities/ServicesPack';
+import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
 import { IServicesPackRepository } from '@domain/interfaces/IServicesPackRepository';
+import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
 import { AddServiceDoneOnServicesPack } from './AddServiceDoneOnServicesPack';
 
 describe('Add Service Done on Services Pack', () => {
   let usecase: AddServiceDoneOnServicesPack;
-  let repository: IServicesPackRepository;
+  let servicesPackRepository: IServicesPackRepository;
+  let servicesRepository: IServiceRepository;
+  let serviceTypeRepository: IServiceTypeRepository;
 
   const mockPack: ServicesPack = {
     id: '12345',
@@ -31,7 +35,22 @@ describe('Add Service Done on Services Pack', () => {
   };
 
   beforeEach(() => {
-    repository = {
+    serviceTypeRepository = {
+      create: null,
+      update: null,
+      findAll: null,
+      findById: jest.fn(() => Promise.resolve({
+        name: 'Manicure',
+        id: '1234',
+      })),
+      findByIds: jest.fn(() => Promise.resolve([
+        { name: 'Manicure', id: '1234' },
+        { name: 'Pedicure', id: '4567' },
+      ])),
+      findByName: null,
+    };
+
+    servicesPackRepository = {
       create: jest.fn((x) => Promise.resolve(x)),
       update: jest.fn((x) => Promise.resolve(x)),
       findAll: null,
@@ -40,7 +59,20 @@ describe('Add Service Done on Services Pack', () => {
       findByMonth: null,
     };
 
-    usecase = new AddServiceDoneOnServicesPack(repository);
+    servicesRepository = {
+      create: jest.fn((x) => Promise.resolve(x)),
+      destroy: null,
+      findAll: null,
+      findById: null,
+      findByMonth: null,
+      update: null,
+    };
+
+    usecase = new AddServiceDoneOnServicesPack(
+      serviceTypeRepository,
+      servicesRepository,
+      servicesPackRepository,
+    );
   });
 
   it('should add a service on a existent services pack', async () => {
@@ -74,8 +106,13 @@ describe('Add Service Done on Services Pack', () => {
       ],
     };
 
-    repository.findById = jest.fn(() => Promise.resolve(newMockPack));
-    usecase = new AddServiceDoneOnServicesPack(repository);
+    servicesPackRepository.findById = jest.fn(() => Promise.resolve(newMockPack));
+
+    usecase = new AddServiceDoneOnServicesPack(
+      serviceTypeRepository,
+      servicesRepository,
+      servicesPackRepository,
+    );
 
     expect(async () => {
       await usecase.execute('123', {

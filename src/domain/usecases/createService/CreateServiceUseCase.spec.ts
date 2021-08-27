@@ -1,14 +1,31 @@
 import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
+import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
 import { CreateServiceUseCase } from './CreateServiceUseCase';
 
 describe('Create Service', () => {
   let usecase: CreateServiceUseCase;
-  let repository: IServiceRepository;
+  let serviceRepository: IServiceRepository;
+  let serviceTypeRepository: IServiceTypeRepository;
 
   beforeEach(() => {
-    repository = {
+    serviceTypeRepository = {
+      create: null,
+      update: null,
+      findAll: null,
+      findById: jest.fn(() => Promise.resolve({
+        name: 'Manicure',
+        id: '1234',
+      })),
+      findByIds: jest.fn(() => Promise.resolve([
+        { name: 'Manicure', id: '1234' },
+        { name: 'Pedicure', id: '4567' },
+      ])),
+      findByName: null,
+    };
+
+    serviceRepository = {
       create: jest.fn((x) => Promise.resolve(x)),
       update: null,
       destroy: null,
@@ -17,14 +34,14 @@ describe('Create Service', () => {
       findByMonth: null,
     };
 
-    usecase = new CreateServiceUseCase(repository);
+    usecase = new CreateServiceUseCase(serviceTypeRepository, serviceRepository);
   });
 
   it('should create a new service', async () => {
     const service = await usecase.execute({
       customer: 'Débora',
       date: new Date(),
-      servicesDoneIds: ['5567'],
+      servicesDoneIds: ['1234'],
       price: 25,
     });
 
@@ -36,11 +53,29 @@ describe('Create Service', () => {
     const service = await usecase.execute({
       customer: 'Débora',
       date: new Date(),
-      servicesDoneIds: ['5892'],
+      servicesDoneIds: ['1234'],
       price: 45,
     });
 
-    expect(repository.create).toBeCalledWith(service);
+    expect(serviceRepository.create).toBeCalledWith(service);
+  });
+
+  it('should not create if any service type doesnt exists', async () => {
+    const customRepository = {
+      ...serviceTypeRepository,
+      findByIds: jest.fn(() => Promise.resolve([])),
+    };
+
+    usecase = new CreateServiceUseCase(customRepository, serviceRepository);
+
+    expect(async () => {
+      await usecase.execute({
+        customer: 'Débora',
+        date: new Date(),
+        servicesDoneIds: ['1234'],
+        price: 45,
+      });
+    }).rejects.toBeInstanceOf(ApiError);
   });
 
   it('should not create object without services done ids', async () => {
@@ -54,11 +89,11 @@ describe('Create Service', () => {
     }).rejects.toBeInstanceOf(ApiError);
   });
 
-  it('should have property isFromPack equals to null', async () => {
+  it('should have property isFromPack equals to false', async () => {
     const service = await usecase.execute({
       customer: 'Débora',
       date: new Date(),
-      servicesDoneIds: ['5892'],
+      servicesDoneIds: ['1234'],
       price: 45,
     });
 
