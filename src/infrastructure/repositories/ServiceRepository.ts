@@ -124,12 +124,14 @@ export class ServiceRepository implements IServiceRepository {
   }
 
   async findByMonth(date: Date): Promise<Service[]> {
-    // const snapshot = await getDocs(query(this.table, where('date', )));
+    const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
+    const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-    // if (snapshot.empty) return [];
+    const snapshot = await getDocs(query(this.table, where('date', '>=', firstDay), where('date', '<=', lastDay)));
 
-    // return this.convertSnapshotToServiceList(snapshot);
-    return [];
+    if (snapshot.empty) return [];
+
+    return this.convertSnapshotToServiceList(snapshot);
   }
 
   async findById(id: string): Promise<Service> {
