@@ -7,7 +7,6 @@ import {
   Firestore,
   getDoc,
   getDocs,
-  limit,
   query,
   QueryDocumentSnapshot,
   QuerySnapshot,
@@ -16,8 +15,8 @@ import {
 } from 'firebase/firestore';
 
 import { Service } from '@domain/entities/Service';
-import { ServiceType } from '@domain/entities/ServiceType';
 import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
+import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 
 import { Firebase } from './Firebase';
 
@@ -26,15 +25,10 @@ export class ServiceRepository implements IServiceRepository {
   readonly tableName: string;
   readonly table: CollectionReference;
 
-  constructor() {
+  constructor(private serviceTypeRepository: IServiceTypeRepository) {
     this.db = Firebase.storage;
     this.tableName = 'services';
     this.table = collection(this.db, this.tableName);
-  }
-
-  private async getServiceTypes(ids: string[]): Promise<ServiceType[]> {
-    const serviceTypesSnapshot = await getDocs(query(collection(this.db, 'serviceTypes'), where('id', 'in', ids)));
-    return serviceTypesSnapshot.docs.map((item) => item.data() as ServiceType);
   }
 
   async create({
@@ -58,7 +52,7 @@ export class ServiceRepository implements IServiceRepository {
       id,
       customer,
       servicesDoneIds,
-      servicesDone: await this.getServiceTypes(servicesDoneIds),
+      servicesDone: await this.serviceTypeRepository.findByIds(servicesDoneIds),
       price,
       date,
       isFromPack,
@@ -86,7 +80,7 @@ export class ServiceRepository implements IServiceRepository {
       id,
       customer,
       servicesDoneIds,
-      servicesDone: await this.getServiceTypes(servicesDoneIds),
+      servicesDone: await this.serviceTypeRepository.findByIds(servicesDoneIds),
       price,
       date,
       isFromPack,
@@ -101,7 +95,7 @@ export class ServiceRepository implements IServiceRepository {
   private async getServiceData(snapshot: QueryDocumentSnapshot<DocumentData>): Promise<Service> {
     const data = snapshot.data();
 
-    const servicesDone = await this.getServiceTypes(data.servicesDoneIds);
+    const servicesDone = await this.serviceTypeRepository.findByIds(data.servicesDoneIds);
 
     return {
       ...data,
