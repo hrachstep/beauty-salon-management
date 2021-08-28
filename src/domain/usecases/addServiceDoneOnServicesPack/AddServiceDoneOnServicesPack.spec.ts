@@ -20,15 +20,11 @@ describe('Add Service Done on Services Pack', () => {
     servicesCount: [
       {
         quantity: 4,
-        serviceType: {
-          name: 'Manicure',
-        },
+        serviceTypeId: '1234',
       },
       {
         quantity: 2,
-        serviceType: {
-          name: 'Pedicure',
-        },
+        serviceTypeId: '5678',
       },
     ],
     services: [],

@@ -6,7 +6,8 @@ export type ServicesPack = {
   customer: string;
   services?: Service[];
   servicesCount: {
-    serviceType: ServiceType,
+    serviceType?: ServiceType;
+    serviceTypeId: string;
     quantity: number;
   }[];
   price: number;
