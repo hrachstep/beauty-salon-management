@@ -31,6 +31,7 @@ export class CreateServicesPackUseCase {
       id: uuidV4(),
       servicesCount: filteredServicesCount,
       services: [],
+      servicesId: [],
       customer,
       price,
       startDate,

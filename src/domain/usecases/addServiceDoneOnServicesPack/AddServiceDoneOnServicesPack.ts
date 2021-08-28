@@ -42,17 +42,24 @@ export class AddServiceDoneOnServicesPack {
       customer: pack.customer,
       date,
       servicesDoneIds,
+      price: 0,
       isFromPack: true,
     });
 
     const updatedPack = await this.servicesPackRepository.update({
       ...pack,
-      services: [
-        ...pack.services,
-        service,
+      servicesId: [
+        ...pack.servicesId,
+        service.id,
       ],
     });
 
-    return updatedPack;
+    return {
+      ...updatedPack,
+      services: [
+        ...updatedPack.services,
+        service,
+      ],
+    };
   }
 }
