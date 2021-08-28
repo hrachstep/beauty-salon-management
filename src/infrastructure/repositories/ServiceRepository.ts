@@ -123,6 +123,14 @@ export class ServiceRepository implements IServiceRepository {
     return this.convertSnapshotToServiceList(snapshot);
   }
 
+  async findByIds(ids: string[]): Promise<Service[]> {
+    const snapshot = await getDocs(query(this.table, where('id', 'in', ids)));
+
+    if (snapshot.empty) return [];
+
+    return this.convertSnapshotToServiceList(snapshot);
+  }
+
   async findByMonth(date: Date): Promise<Service[]> {
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);

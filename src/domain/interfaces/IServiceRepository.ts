@@ -7,4 +7,5 @@ export interface IServiceRepository {
   findAll(): Promise<Service[]>;
   findByMonth(date: Date): Promise<Service[]>;
   findById(id: string): Promise<Service>;
+  findByIds(ids: string[]): Promise<Service[]>;
 }
