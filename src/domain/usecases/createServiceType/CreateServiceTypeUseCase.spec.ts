@@ -15,6 +15,7 @@ describe('Create Service Type', () => {
   beforeEach(() => {
     repository = {
       create: jest.fn((x) => Promise.resolve(x)),
+      destroy: null,
       findAll: null,
       findById: null,
       findByIds: null,

@@ -19,6 +19,7 @@ describe('List Service Typess', () => {
       findByName: null,
       findById: null,
       findByIds: null,
+      destroy: null,
       update: null,
     };
 

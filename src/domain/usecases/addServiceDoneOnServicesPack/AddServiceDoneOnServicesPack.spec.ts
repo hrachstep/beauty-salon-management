@@ -35,6 +35,7 @@ describe('Add Service Done on Services Pack', () => {
       create: null,
       update: null,
       findAll: null,
+      destroy: null,
       findById: jest.fn(() => Promise.resolve({
         name: 'Manicure',
         id: '1234',
@@ -60,6 +61,7 @@ describe('Add Service Done on Services Pack', () => {
       destroy: null,
       findAll: null,
       findById: null,
+      findByIds: null,
       findByMonth: null,
       update: null,
     };

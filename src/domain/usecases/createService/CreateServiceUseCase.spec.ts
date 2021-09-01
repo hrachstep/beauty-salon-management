@@ -13,6 +13,7 @@ describe('Create Service', () => {
     serviceTypeRepository = {
       create: null,
       update: null,
+      destroy: null,
       findAll: null,
       findById: jest.fn(() => Promise.resolve({
         name: 'Manicure',
@@ -29,6 +30,7 @@ describe('Create Service', () => {
       create: jest.fn((x) => Promise.resolve(x)),
       update: null,
       destroy: null,
+      findByIds: null,
       findAll: null,
       findById: null,
       findByMonth: null,

@@ -49,7 +49,7 @@ export class AddServiceDoneOnServicesPack {
     const updatedPack = await this.servicesPackRepository.update({
       ...pack,
       servicesId: [
-        ...pack.servicesId,
+        ...pack.servicesId ?? [],
         service.id,
       ],
     });

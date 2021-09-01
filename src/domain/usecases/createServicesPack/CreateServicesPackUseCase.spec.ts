@@ -22,6 +22,7 @@ describe('Create Services Pack', () => {
 
     serviceTypeRepository = {
       create: null,
+      destroy: null,
       findAll: null,
       findById: null,
       findByName: null,
