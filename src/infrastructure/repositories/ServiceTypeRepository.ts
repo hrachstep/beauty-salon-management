@@ -1,6 +1,7 @@
 import {
   collection,
   CollectionReference,
+  deleteDoc,
   doc,
   Firestore,
   getDoc,
@@ -43,6 +44,11 @@ export class ServiceTypeRepository implements IServiceTypeRepository {
     });
 
     return { id, name };
+  }
+
+  async destroy(id: string): Promise<string> {
+    await deleteDoc(doc(this.table, id));
+    return id;
   }
 
   async findAll(): Promise<ServiceType[]> {
