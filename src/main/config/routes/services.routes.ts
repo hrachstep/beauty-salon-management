@@ -1,13 +1,16 @@
 import { Router } from 'express';
 
+import { CreateServiceController } from '@main/controllers/createService/CreateServiceController';
 import { ListServiceByIdController } from '@main/controllers/listServiceById/ListServiceByIdController';
 import { ListServicesController } from '@main/controllers/listServices/ListServicesController';
 
 import { checkErrorMiddleware } from '../middlewares/checkErrorMiddleware';
 
 const router = Router();
+
 const listServicesControler = new ListServicesController();
-const listServiceById = new ListServiceByIdController();
+const listServiceByIdController = new ListServiceByIdController();
+const createServiceController = new CreateServiceController();
 
 router.get('/',
   listServicesControler.validation(),
@@ -15,8 +18,13 @@ router.get('/',
   listServicesControler.handle.bind(listServicesControler));
 
 router.get('/:id',
-  listServiceById.validate(),
+  listServiceByIdController.validate(),
   checkErrorMiddleware,
-  listServiceById.handle.bind(listServiceById));
+  listServiceByIdController.handle.bind(listServiceByIdController));
+
+router.post('/',
+  createServiceController.validate(),
+  checkErrorMiddleware,
+  createServiceController.handle.bind(createServiceController));
 
 export default router;
