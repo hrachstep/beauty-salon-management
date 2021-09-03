@@ -7,13 +7,13 @@ import { ListServiceTypesController } from '@main/controllers/listServiceTypes/L
 const createServiceTypeController = new CreateServiceTypeController();
 const listServiceTypesController = new ListServiceTypesController();
 
-const serviceTypesRoutes = Router();
+const router = Router();
 
-serviceTypesRoutes.get('/', listServiceTypesController.handle.bind(listServiceTypesController));
+router.get('/', listServiceTypesController.handle.bind(listServiceTypesController));
 
-serviceTypesRoutes.post('/',
+router.post('/',
   createServiceTypeController.validate(),
   checkErrorMiddleware,
   createServiceTypeController.handle.bind(createServiceTypeController));
 
-export { serviceTypesRoutes };
+export default router;
