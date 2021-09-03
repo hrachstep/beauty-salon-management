@@ -70,7 +70,7 @@ export class ServiceTypeRepository implements IServiceTypeRepository {
   async findByIds(ids: string[]): Promise<ServiceType[]> {
     const snapshot = await getDocs(query(this.table, where('id', 'in', ids)));
 
-    if (snapshot.empty) return null;
+    if (snapshot.empty) return [];
 
     return snapshot.docs.map((item) => item.data() as ServiceType);
   }
