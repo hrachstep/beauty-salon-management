@@ -4,12 +4,19 @@ import { createApp } from '@main/config/app';
 
 describe('List Services controller', () => {
   const app = createApp();
+  const route = '/services';
 
-  it('should return a list of services done', async () => {
-    const response = await request(app).get('/services');
+  it('should return status 400 if "month" is invalid', async () => {
+    const response = await request(app)
+      .get(`${route}?month=incorrect`);
 
-    expect(response.status).toBe(200);
-    console.log(response.body);
-    expect(response.body).toBeInstanceOf([]);
+    expect(response.statusCode).toBe(400);
+  });
+
+  it('should return status 200 on success', async () => {
+    const response = await request(app)
+      .get(`${route}`);
+
+    expect(response.statusCode).toBe(200);
   });
 });
