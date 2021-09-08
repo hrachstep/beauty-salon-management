@@ -7,8 +7,8 @@
 - Date *
 
 > ## Use case
-1. [] Receives a POST request with props
-2. [] Validate the required date
-3. [] Create a service with this data on database
-4. [] Return 201 with created data
+1. [X] Receives a POST request with props
+2. [X] Validate the required date
+3. [X] Create a service with this data on database
+4. [X] Return 201 with created data
 

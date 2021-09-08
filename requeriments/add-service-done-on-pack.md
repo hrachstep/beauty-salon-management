@@ -6,9 +6,9 @@
 - Date *
 
 > ## Usecase
-1. [] Receives a POST request with body
-2. [] Validate required fields
-3. [] Validate if Service Pack exists
-4. [] Create a new service
-5. [] Append the created service on service pack list
-6. [] Return status 201 with service pack data
+1. [X] Receives a POST request with body
+2. [X] Validate required fields
+3. [X] Validate if Service Pack exists
+4. [X] Create a new service
+5. [X] Append the created service on service pack list
+6. [X] Return status 201 with service pack data
