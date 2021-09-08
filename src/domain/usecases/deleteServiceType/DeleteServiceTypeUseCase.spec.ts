@@ -1,6 +1,6 @@
 import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 
-import { DeleteServiceTypeRepository } from './DeleteServiceTypeUseCase';
+import { DeleteServiceTypeUsecase } from './DeleteServiceTypeUseCase';
 
 describe('Delete Service Type usecase', () => {
   const repository: IServiceTypeRepository = {
@@ -13,7 +13,7 @@ describe('Delete Service Type usecase', () => {
     update: null,
   };
 
-  const usecase = new DeleteServiceTypeRepository(repository);
+  const usecase = new DeleteServiceTypeUsecase(repository);
 
   it('should call repository with passed "ID"', async () => {
     const id = '12345';
