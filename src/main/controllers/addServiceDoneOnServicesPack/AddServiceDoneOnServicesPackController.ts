@@ -1,34 +1,15 @@
 import { Request, Response } from 'express';
 import { body, ValidationChain } from 'express-validator';
+import { container } from 'tsyringe';
 
-import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
-import { IServicesPackRepository } from '@domain/interfaces/IServicesPackRepository';
-import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 import { AddServiceDoneOnServicesPack } from '@domain/usecases/addServiceDoneOnServicesPack/AddServiceDoneOnServicesPack';
-import { ServiceRepository } from '@infrastructure/repositories/ServiceRepository';
-import { ServicesPackRepository } from '@infrastructure/repositories/ServicesPackRepository';
-import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
 import { IController } from '@main/interfaces/IController';
 
 export class AddServiceDoneOnServicesPackController implements IController {
-  private readonly serviceTypesRepository: IServiceTypeRepository;
-  private readonly servicesRepository: IServiceRepository;
-  private readonly servicesPackRepository: IServicesPackRepository;
   private readonly usecase: AddServiceDoneOnServicesPack;
 
   constructor() {
-    this.serviceTypesRepository = new ServiceTypeRepository();
-    this.servicesRepository = new ServiceRepository(this.serviceTypesRepository);
-    this.servicesPackRepository = new ServicesPackRepository(
-      this.serviceTypesRepository,
-      this.servicesRepository,
-    );
-
-    this.usecase = new AddServiceDoneOnServicesPack(
-      this.serviceTypesRepository,
-      this.servicesRepository,
-      this.servicesPackRepository,
-    );
+    this.usecase = container.resolve(AddServiceDoneOnServicesPack);
   }
 
   validate(): ValidationChain[] {

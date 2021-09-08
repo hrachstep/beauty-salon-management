@@ -1,3 +1,4 @@
+import { inject, injectable } from 'tsyringe';
 import { v4 as uuidV4 } from 'uuid';
 
 import { ServicesPack } from '@domain/entities/ServicesPack';
@@ -5,9 +6,13 @@ import { IServicesPackRepository } from '@domain/interfaces/IServicesPackReposit
 import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
+@injectable()
 export class CreateServicesPackUseCase {
   constructor(
+    @inject('ServiceTypeRepository')
     private serviceTypeRepository: IServiceTypeRepository,
+
+    @inject('ServicesPackRepository')
     private servicesPackRepository: IServicesPackRepository,
   ) {}
 

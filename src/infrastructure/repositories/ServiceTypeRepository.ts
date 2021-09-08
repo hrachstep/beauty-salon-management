@@ -11,12 +11,14 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore';
+import { injectable } from 'tsyringe';
 
 import { ServiceType } from '@domain/entities/ServiceType';
 import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 
 import { Firebase } from './Firebase';
 
+@injectable()
 export class ServiceTypeRepository implements IServiceTypeRepository {
   readonly db: Firestore;
   readonly tableName: string;

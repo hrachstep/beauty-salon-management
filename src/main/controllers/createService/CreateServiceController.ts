@@ -1,22 +1,15 @@
 import { Request, Response } from 'express';
 import { body, ValidationChain } from 'express-validator';
+import { container } from 'tsyringe';
 
-import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
-import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 import { CreateServiceUseCase } from '@domain/usecases/createService/CreateServiceUseCase';
-import { ServiceRepository } from '@infrastructure/repositories/ServiceRepository';
-import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
 import { IController } from '@main/interfaces/IController';
 
 export class CreateServiceController implements IController {
-  private serviceTypesRepository: IServiceTypeRepository;
-  private servicesRepository: IServiceRepository;
   private readonly usecase: CreateServiceUseCase;
 
   constructor() {
-    this.serviceTypesRepository = new ServiceTypeRepository();
-    this.servicesRepository = new ServiceRepository(this.serviceTypesRepository);
-    this.usecase = new CreateServiceUseCase(this.serviceTypesRepository, this.servicesRepository);
+    this.usecase = container.resolve(CreateServiceUseCase);
   }
 
   validate(): ValidationChain[] {

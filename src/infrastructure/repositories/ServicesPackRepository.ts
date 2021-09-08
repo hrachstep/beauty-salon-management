@@ -13,6 +13,7 @@ import {
   setDoc,
   where,
 } from 'firebase/firestore';
+import { inject, injectable } from 'tsyringe';
 
 import { ServicesPack } from '@domain/entities/ServicesPack';
 import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
@@ -21,13 +22,17 @@ import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepositor
 
 import { Firebase } from './Firebase';
 
+@injectable()
 export class ServicesPackRepository implements IServicesPackRepository {
   readonly db: Firestore;
   readonly tableName: string;
   readonly table: CollectionReference;
 
   constructor(
+    @inject('ServiceTypeRepository')
     private serviceTypeRepository: IServiceTypeRepository,
+
+    @inject('ServiceRepository')
     private serviceRepository: IServiceRepository,
   ) {
     this.db = Firebase.storage;

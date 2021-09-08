@@ -1,9 +1,15 @@
+import { inject, injectable } from 'tsyringe';
+
 import { Service } from '@domain/entities/Service';
 import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
+@injectable()
 export class ListServiceByIdUseCase {
-  constructor(private servicesRepository: IServiceRepository) {}
+  constructor(
+    @inject('ServiceRepository')
+    private servicesRepository: IServiceRepository,
+  ) {}
 
   async execute(id: string): Promise<Service> {
     if (!id) return null;

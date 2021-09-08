@@ -1,4 +1,7 @@
+import 'reflect-metadata';
 import 'dotenv/config';
+import '@shared/container';
+
 import express, { Express } from 'express';
 
 import setupApp from './setup';

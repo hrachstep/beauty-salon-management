@@ -1,17 +1,15 @@
 import { Request, Response } from 'express';
-import { body, ValidationChain, validationResult } from 'express-validator';
+import { body, ValidationChain } from 'express-validator';
+import { container } from 'tsyringe';
 
-import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 import { CreateServiceTypeUseCase } from '@domain/usecases/createServiceType/CreateServiceTypeUseCase';
-import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
 import { IController } from '@main/interfaces/IController';
-import { ApiError } from '@shared/errors/ApiError';
 
 export class CreateServiceTypeController implements IController {
-  private readonly repository: IServiceTypeRepository;
+  private readonly usecase: CreateServiceTypeUseCase;
 
   constructor() {
-    this.repository = new ServiceTypeRepository();
+    this.usecase = container.resolve(CreateServiceTypeUseCase);
   }
 
   validate(): ValidationChain[] {
@@ -23,8 +21,7 @@ export class CreateServiceTypeController implements IController {
   async handle(request: Request, response: Response): Promise<Response> {
     const { name } = request.body;
 
-    const usecase = new CreateServiceTypeUseCase(this.repository);
-    const result = await usecase.execute({ name });
+    const result = await this.usecase.execute({ name });
 
     return response.status(201).json(result);
   }

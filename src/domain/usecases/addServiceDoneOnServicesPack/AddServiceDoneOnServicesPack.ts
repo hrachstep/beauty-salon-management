@@ -1,3 +1,5 @@
+import { injectable, inject } from 'tsyringe';
+
 import { Service } from '@domain/entities/Service';
 import { ServicesPack } from '@domain/entities/ServicesPack';
 import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
@@ -7,12 +9,18 @@ import { ApiError } from '@shared/errors/ApiError';
 
 import { CreateServiceUseCase } from '../createService/CreateServiceUseCase';
 
+@injectable()
 export class AddServiceDoneOnServicesPack {
   readonly createServiceUseCase: CreateServiceUseCase;
 
   constructor(
+    @inject('ServiceTypeRepository')
     private serviceTypeRepository: IServiceTypeRepository,
+
+    @inject('ServiceRepository')
     private servicesRepository: IServiceRepository,
+
+    @inject('ServicesPackRepository')
     private servicesPackRepository: IServicesPackRepository,
   ) {
     this.createServiceUseCase = new CreateServiceUseCase(
