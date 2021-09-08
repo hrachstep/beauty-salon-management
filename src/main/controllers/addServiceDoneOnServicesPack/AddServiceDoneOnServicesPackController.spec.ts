@@ -85,6 +85,6 @@ describe('Add Service Done on Services Pack', () => {
     expect(response.statusCode).toBe(201);
     expect(id).toBeTruthy();
 
-    if (id) await servicesPackRepository.destroy(id);
+    if (id) await servicesRepository.destroy(id);
   });
 });
