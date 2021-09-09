@@ -35,7 +35,7 @@ export class ServicesPackRepository implements IServicesPackRepository {
     @inject('ServiceRepository')
     private serviceRepository: IServiceRepository,
   ) {
-    this.db = Firebase.storage;
+    this.db = Firebase.database;
     this.tableName = 'servicesPack';
     this.table = collection(this.db, this.tableName);
   }

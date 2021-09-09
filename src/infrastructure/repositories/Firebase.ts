@@ -24,7 +24,7 @@ export class Firebase {
     }
   }
 
-  public static get storage(): Firestore {
+  public static get database(): Firestore {
     if (!this.app) {
       this.initFirebase();
     }

@@ -25,7 +25,7 @@ export class ServiceTypeRepository implements IServiceTypeRepository {
   readonly table: CollectionReference;
 
   constructor() {
-    this.db = Firebase.storage;
+    this.db = Firebase.database;
     this.tableName = 'serviceTypes';
     this.table = collection(this.db, this.tableName);
   }
