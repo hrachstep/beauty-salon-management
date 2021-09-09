@@ -7,5 +7,6 @@ export type Service = {
   servicesDone?: ServiceType[];
   date: Date;
   price?: number;
-  isFromPack?: boolean
+  isFromPack?: boolean;
+  image?: string;
 }

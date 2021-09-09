@@ -21,6 +21,7 @@ export class CreateServiceUseCase {
     date,
     servicesDoneIds,
     price,
+    image = '',
     isFromPack = false,
   }: Service): Promise<Service> {
     const id = uuidV4();
@@ -40,6 +41,7 @@ export class CreateServiceUseCase {
       servicesDoneIds,
       price,
       isFromPack,
+      image,
     });
 
     return service;
