@@ -27,6 +27,7 @@ export class CreateServiceController implements IController {
       date,
       servicesDoneIds,
       price,
+      image,
     } = request.body;
 
     const result = await this.usecase.execute({
@@ -34,6 +35,7 @@ export class CreateServiceController implements IController {
       date,
       servicesDoneIds,
       price,
+      image,
     });
 
     return response.status(201).json(result);
