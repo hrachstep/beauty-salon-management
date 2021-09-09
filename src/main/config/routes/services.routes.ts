@@ -4,8 +4,11 @@ import { CreateServiceController } from '@main/controllers/createService/CreateS
 import { DeleteServiceController } from '@main/controllers/deleteService/DeleteServiceController';
 import { ListServiceByIdController } from '@main/controllers/listServiceById/ListServiceByIdController';
 import { ListServicesController } from '@main/controllers/listServices/ListServicesController';
+import { UploadImageController } from '@main/controllers/uploadImage/UploadImageController';
 
 import { checkErrorMiddleware } from '../middlewares/checkErrorMiddleware';
+import { deleteUploadedFileOnRequestError } from '../middlewares/deleteUploadedFileOnRequestError';
+import uploadImageMiddleware from '../middlewares/uploadImageMiddleware';
 
 const router = Router();
 
@@ -13,6 +16,7 @@ const listServicesControler = new ListServicesController();
 const listServiceByIdController = new ListServiceByIdController();
 const createServiceController = new CreateServiceController();
 const deleteServiceController = new DeleteServiceController();
+const uploadImageController = new UploadImageController();
 
 router.get('/',
   listServicesControler.validation(),
@@ -25,9 +29,12 @@ router.get('/:id',
   listServiceByIdController.handle.bind(listServiceByIdController));
 
 router.post('/',
+  uploadImageMiddleware.single('image'),
   createServiceController.validate(),
   checkErrorMiddleware,
-  createServiceController.handle.bind(createServiceController));
+  uploadImageController.handle.bind(uploadImageController),
+  createServiceController.handle.bind(createServiceController),
+  deleteUploadedFileOnRequestError);
 
 router.delete('/:id', deleteServiceController.handle.bind(deleteServiceController));
 
