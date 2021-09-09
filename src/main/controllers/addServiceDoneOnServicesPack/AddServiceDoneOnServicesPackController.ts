@@ -26,11 +26,13 @@ export class AddServiceDoneOnServicesPackController implements IController {
     const {
       date,
       servicesDoneIds,
+      image,
     } = request.body;
 
     const result = await this.usecase.execute(id, {
       date,
       servicesDoneIds,
+      image,
     });
 
     return response.status(201).json(result);
