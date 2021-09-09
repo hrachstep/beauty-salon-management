@@ -4,6 +4,7 @@
 - Service Pack Id *
 - Service Done *
 - Date *
+- Image
 
 > ## Usecase
 1. [X] Receives a POST request with body
