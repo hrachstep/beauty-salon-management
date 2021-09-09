@@ -32,6 +32,7 @@ export class AddServiceDoneOnServicesPack {
   async execute(packId: string, {
     date,
     servicesDoneIds,
+    image,
   }: Service): Promise<ServicesPack> {
     if (!servicesDoneIds?.length) throw new ApiError('No Services Done passed!');
 
@@ -52,6 +53,7 @@ export class AddServiceDoneOnServicesPack {
       servicesDoneIds,
       price: 0,
       isFromPack: true,
+      image,
     });
 
     const updatedPack = await this.servicesPackRepository.update({
