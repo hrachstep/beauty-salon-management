@@ -1,5 +1,6 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
 import { Firestore, getFirestore } from 'firebase/firestore';
+import { FirebaseStorage, getStorage } from 'firebase/storage';
 
 export class Firebase {
   private static app: FirebaseApp;
@@ -24,11 +25,19 @@ export class Firebase {
     }
   }
 
-  public static get database(): Firestore {
+  private static checkAppExists() {
     if (!this.app) {
       this.initFirebase();
     }
+  }
 
+  public static get database(): Firestore {
+    this.checkAppExists();
     return getFirestore(this.app);
+  }
+
+  public static get storage(): FirebaseStorage {
+    this.checkAppExists();
+    return getStorage(this.app);
   }
 }
