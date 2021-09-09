@@ -43,6 +43,7 @@ export class ServiceRepository implements IServiceRepository {
     price,
     date,
     isFromPack,
+    image,
   }: Service): Promise<Service> {
     await setDoc(doc(this.table, id), {
       id,
@@ -51,6 +52,7 @@ export class ServiceRepository implements IServiceRepository {
       price,
       date,
       isFromPack,
+      image,
     });
 
     return {
@@ -61,6 +63,7 @@ export class ServiceRepository implements IServiceRepository {
       price,
       date,
       isFromPack,
+      image,
     };
   }
 
@@ -71,6 +74,7 @@ export class ServiceRepository implements IServiceRepository {
     price,
     date,
     isFromPack,
+    image,
   }: Service): Promise<Service> {
     await setDoc(doc(this.table, id), {
       id,
@@ -79,6 +83,7 @@ export class ServiceRepository implements IServiceRepository {
       price,
       date,
       isFromPack,
+      image,
     });
 
     return {
@@ -89,6 +94,7 @@ export class ServiceRepository implements IServiceRepository {
       price,
       date,
       isFromPack,
+      image,
     };
   }
 
