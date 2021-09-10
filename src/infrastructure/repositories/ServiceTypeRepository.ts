@@ -16,7 +16,7 @@ import { injectable } from 'tsyringe';
 import { ServiceType } from '@domain/entities/ServiceType';
 import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 
-import { Firebase } from './Firebase';
+import { Firebase } from '../shared/Firebase';
 
 @injectable()
 export class ServiceTypeRepository implements IServiceTypeRepository {

@@ -4,7 +4,7 @@ import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
 import { IServicesPackRepository } from '@domain/interfaces/IServicesPackRepository';
 import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 import { IStorageProvider } from '@domain/interfaces/IStorageProvider';
-import { FirebaseStorageProvider } from '@infrastructure/repositories/FirebaseStorageProvider';
+import { FirebaseStorageProvider } from '@infrastructure/providers/FirebaseStorageProvider';
 import { ServiceRepository } from '@infrastructure/repositories/ServiceRepository';
 import { ServicesPackRepository } from '@infrastructure/repositories/ServicesPackRepository';
 import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
