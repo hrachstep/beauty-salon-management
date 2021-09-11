@@ -10,10 +10,10 @@
 
   <ol>
     <li>
-      <a href="#📰-about-the-project">About The Project</a>
+      <a href="#-about-the-project">About The Project</a>
     </li>
     <li>
-      <a href="#getting-started">Getting Started</a>
+      <a href="#-getting-started">Getting Started</a>
       <ul>
         <li><a href="#">Prerequisites</a></li>
         <li><a href="#">Environment Variables</a></li>
@@ -21,7 +21,7 @@
       </ul>
     </li>
     <li>
-      <a href="#tech-details">Tech Details</a>
+      <a href="#-tech-details">Tech Details</a>
       <ul>
         <li><a href="#">Architecture</a></li>
         <li><a href="#">Authentication</a></li>
@@ -33,10 +33,10 @@
       </ul>
     </li>
     <li>
-      <a href="#roadmap">Roadmap</a>
+      <a href="#-roadmap">Roadmap</a>
     </li>
     <li>
-      <a href="#license">License</a>
+      <a href="#-license">License</a>
     </li>
   </ol>
 </details>
