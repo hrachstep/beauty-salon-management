@@ -19,7 +19,7 @@ import { Service } from '@domain/entities/Service';
 import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
 import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 
-import { Firebase } from './Firebase';
+import { Firebase } from '../shared/Firebase';
 
 @injectable()
 export class ServiceRepository implements IServiceRepository {

@@ -7,7 +7,7 @@ import { injectable } from 'tsyringe';
 
 import { IStorageProvider } from '@domain/interfaces/IStorageProvider';
 
-import { Firebase } from './Firebase';
+import { Firebase } from '../shared/Firebase';
 
 @injectable()
 export class FirebaseStorageProvider implements IStorageProvider {

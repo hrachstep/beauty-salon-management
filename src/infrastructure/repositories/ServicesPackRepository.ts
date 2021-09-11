@@ -20,7 +20,7 @@ import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
 import { IServicesPackRepository } from '@domain/interfaces/IServicesPackRepository';
 import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
 
-import { Firebase } from './Firebase';
+import { Firebase } from '../shared/Firebase';
 
 @injectable()
 export class ServicesPackRepository implements IServicesPackRepository {

@@ -1,4 +1,5 @@
 import { FirebaseApp, initializeApp } from 'firebase/app';
+import { Auth, getAuth } from 'firebase/auth';
 import { Firestore, getFirestore } from 'firebase/firestore';
 import { FirebaseStorage, getStorage } from 'firebase/storage';
 
@@ -39,5 +40,10 @@ export class Firebase {
   public static get storage(): FirebaseStorage {
     this.checkAppExists();
     return getStorage(this.app);
+  }
+
+  public static get auth(): Auth {
+    this.checkAppExists();
+    return getAuth(this.app);
   }
 }
