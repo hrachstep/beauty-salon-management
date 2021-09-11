@@ -47,7 +47,7 @@
 // In progress
 ```
 
-## ⚡️ Getting Started
+## ⚡ Getting Started
 ```js
 // to-do
 ```
