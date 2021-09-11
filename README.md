@@ -43,9 +43,14 @@
 
 
 ## 📰 About The Project
-```js
-// In progress
-```
+
+I decide to create this app because my wife is a nail designer and I found that she has a lot of problems managing her business.
+
+She has a hard time knowing how many customers she has served, what your profits and expenses were, and so on.
+
+So I tried to make her life easier. Then I created a mobile app along with this backend to help her solve her problems.
+
+Note the mobile app will not be available here!
 
 ## ⚡ Getting Started
 ```js
