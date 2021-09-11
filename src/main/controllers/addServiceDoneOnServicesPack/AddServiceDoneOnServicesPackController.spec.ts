@@ -6,6 +6,10 @@ import { ServiceRepository } from '@infrastructure/repositories/ServiceRepositor
 import { ServicesPackRepository } from '@infrastructure/repositories/ServicesPackRepository';
 import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
 import { createApp } from '@main/config/app';
+import { authHeaders } from '@shared/tests/authHeaders';
+import { mockAuthProvider } from '@shared/tests/mockAuthProvider';
+
+mockAuthProvider();
 
 describe('Add Service Done on Services Pack', () => {
   let serviceType: ServiceType;
@@ -24,12 +28,14 @@ describe('Add Service Done on Services Pack', () => {
   beforeAll(async () => {
     let response = await request(app)
       .post('/service-types')
+      .set(authHeaders)
       .send({ name: 'Fake Random Name' });
 
     serviceType = response.body;
 
     response = await request(app)
       .post('/services-packs')
+      .set(authHeaders)
       .send({
         customer: 'Fake Customer',
         price: 120,
@@ -53,6 +59,7 @@ describe('Add Service Done on Services Pack', () => {
   it('should send status 400 when "date" is invalid', async () => {
     const response = await request(app)
       .post(route(pack.id))
+      .set(authHeaders)
       .send({
         date: 'invalid date',
         servicesDoneIds: [serviceType.id],
@@ -64,6 +71,7 @@ describe('Add Service Done on Services Pack', () => {
   it('should send status 400 when "servicesDoneIds" is invalid', async () => {
     const response = await request(app)
       .post(route(pack.id))
+      .set(authHeaders)
       .send({
         date: '2021-09-04',
         servicesDoneIds: [],
@@ -75,6 +83,7 @@ describe('Add Service Done on Services Pack', () => {
   it('should send status 201 and return created object on success', async () => {
     const response = await request(app)
       .post(route(pack.id))
+      .set(authHeaders)
       .send({
         date: '2021-09-04',
         servicesDoneIds: [serviceType.id],
