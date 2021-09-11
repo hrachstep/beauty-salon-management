@@ -17,7 +17,7 @@ export class FirebaseAuthProvider implements IAuthProvider {
     const credential = OAuthCredential.fromJSON({
       providerId,
       signInMethod,
-      token,
+      accessToken: token,
     });
 
     try {
