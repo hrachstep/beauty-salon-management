@@ -1,15 +1,16 @@
-<header align="center">
-  <h2 style="font-size: 28px">Beauty Salon Management</h2>
+<p align="center">
+  <h3 align="center">Beauty Salon Management</h3>
+  <p align="center">A backend app for beauty salons to manage your <strong>orders</strong>, <strong>schedules</strong> and <strong>finances!</strong></p>
+</p>
 
-  <p>A backend app for beauty salons to manage your <strong>orders</strong>, <strong>schedules</strong> and <strong>finances!</strong>
-</header>
+<br/>
 
-<details open style="margin: 20px 0">
+<details open>
   <summary>Table of Contents</summary>
 
   <ol>
     <li>
-      <a href="#about-the-project">About The Project</a>
+      <a href="#📰-about-the-project">About The Project</a>
     </li>
     <li>
       <a href="#getting-started">Getting Started</a>
