@@ -17,5 +17,8 @@
       "@infrastructure/*": ["infrastructure/*"],
       "@main/*": ["main/*"]
     }
-  }
+  },
+  "include": [
+    "src"
+  ]
 }
