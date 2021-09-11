@@ -54,6 +54,18 @@ describe('Create Service Controller', () => {
     expect(result.statusCode).toBe(400);
   });
 
+  it('should send status 401 when authentications headers is invalid', async () => {
+    const response = await request(app)
+      .post('/services')
+      .send({
+        customer: 'Fake Name',
+        servicesDoneIds: ['1234', '5678'],
+        date: new Date(),
+      });
+
+    expect(response.statusCode).toBe(401);
+  });
+
   it('should return status 400 if date is invalid', async () => {
     const result = await request(app)
       .post('/services')

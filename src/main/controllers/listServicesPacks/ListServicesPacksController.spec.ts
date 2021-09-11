@@ -20,9 +20,16 @@ describe('List Services Packs controller', () => {
 
   it('should return status 200 on success', async () => {
     const response = await request(app)
-      .get(`${route}`)
+      .get(route)
       .set(authHeaders);
 
     expect(response.statusCode).toBe(200);
+  });
+
+  it('should send status 401 when authentications headers is invalid', async () => {
+    const response = await request(app)
+      .get(route);
+
+    expect(response.statusCode).toBe(401);
   });
 });

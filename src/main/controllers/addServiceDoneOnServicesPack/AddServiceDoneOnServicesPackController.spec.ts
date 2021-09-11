@@ -80,6 +80,17 @@ describe('Add Service Done on Services Pack', () => {
     expect(response.statusCode).toBe(400);
   });
 
+  it('should send status 401 when authentications headers is invalid', async () => {
+    const response = await request(app)
+      .post(route(pack.id))
+      .send({
+        date: '2021-09-04',
+        servicesDoneIds: [],
+      });
+
+    expect(response.statusCode).toBe(401);
+  });
+
   it('should send status 201 and return created object on success', async () => {
     const response = await request(app)
       .post(route(pack.id))

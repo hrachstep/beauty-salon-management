@@ -63,4 +63,11 @@ describe('Create Service Type controller', () => {
 
     expect(response.status).toBe(201);
   });
+
+  it('should send status 401 when authentications headers is invalid', async () => {
+    const response = await request(app)
+      .post('/service-types');
+
+    expect(response.statusCode).toBe(401);
+  });
 });

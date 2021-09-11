@@ -131,4 +131,11 @@ describe('Create Services Pack', () => {
 
     if (id) await servicesPackRepository.destroy(id);
   });
+
+  it('should send status 401 when authentications headers is invalid', async () => {
+    const response = await request(app)
+      .post(route);
+
+    expect(response.statusCode).toBe(401);
+  });
 });

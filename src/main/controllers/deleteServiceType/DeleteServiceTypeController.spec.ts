@@ -17,4 +17,11 @@ describe('Delete Service Type controller', () => {
 
     expect(response.statusCode).toBe(204);
   });
+
+  it('should send status 401 when authentications headers is invalid', async () => {
+    const response = await request(app)
+      .delete(`/service-types/${id}`);
+
+    expect(response.statusCode).toBe(401);
+  });
 });
