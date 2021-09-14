@@ -4,7 +4,7 @@ import { OrdersPack } from '@domain/modules/services/entities/OrdersPack';
 import { ServiceOrder } from '@domain/modules/services/entities/ServiceOrder';
 import { IOrdersPackRepository } from '@domain/modules/services/interfaces/IOrdersPackRepository';
 import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
-import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
 import { CreateServiceOrderUseCase } from '../createServiceOrder';
@@ -14,8 +14,8 @@ export class AddServiceOrderOnOrdersPackUseCase {
   readonly createServiceOrderUseCase: CreateServiceOrderUseCase;
 
   constructor(
-    @inject('ServiceTypeRepository')
-    private serviceTypeRepository: IServiceTypeRepository,
+    @inject('ServiceRepository')
+    private serviceRepository: IServiceRepository,
 
     @inject('ServiceOrderRepository')
     private serviceOrdersRepository: IServiceOrderRepository,
@@ -24,7 +24,7 @@ export class AddServiceOrderOnOrdersPackUseCase {
     private OrdersPackRepository: IOrdersPackRepository,
   ) {
     this.createServiceOrderUseCase = new CreateServiceOrderUseCase(
-      this.serviceTypeRepository,
+      this.serviceRepository,
       this.serviceOrdersRepository,
     );
   }

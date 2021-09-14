@@ -1,9 +1,9 @@
 import request from 'supertest';
 
-import { ServiceType } from '@domain/modules/services/entities/ServiceType';
+import { Service } from '@domain/modules/services/entities/Service';
 import { OrdersPackRepository } from '@infrastructure/repositories/OrdersPackRepository';
 import { ServiceOrderRepository } from '@infrastructure/repositories/ServiceOrderRepository';
-import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
+import { ServiceRepository } from '@infrastructure/repositories/ServiceRepository';
 import { createApp } from '@main/config/app';
 import { authHeaders } from '@shared/tests/authHeaders';
 import { mockAuthProvider } from '@shared/tests/mockAuthProvider';
@@ -11,26 +11,26 @@ import { mockAuthProvider } from '@shared/tests/mockAuthProvider';
 mockAuthProvider();
 
 describe('Create Services Pack', () => {
-  const serviceTypesRepository = new ServiceTypeRepository();
-  const servicesRepository = new ServiceOrderRepository(serviceTypesRepository);
+  const servicesRepository = new ServiceRepository();
+  const serviceOrdersRepository = new ServiceOrderRepository(servicesRepository);
   const ordersPackRepository = new OrdersPackRepository(
-    serviceTypesRepository,
     servicesRepository,
+    serviceOrdersRepository,
   );
 
-  let serviceType: ServiceType;
+  let service: Service;
   const app = createApp();
   const route = '/orders-packs';
 
   beforeAll(async () => {
-    serviceType = await serviceTypesRepository.create({
+    service = await servicesRepository.create({
       id: 'test-id',
       name: 'Fake Name',
     });
   });
 
   afterAll(async () => {
-    if (serviceType.id) { await serviceTypesRepository.destroy(serviceType.id); }
+    if (service.id) { await servicesRepository.destroy(service.id); }
   });
 
   it('should send status 400 if "customer" name is empty', async () => {
@@ -89,7 +89,7 @@ describe('Create Services Pack', () => {
     expect(response.statusCode).toBe(400);
   });
 
-  it('should send status 400 if "servicesCont" isnt a array of object with "count" and "serviceTypeId" valid props', async () => {
+  it('should send status 400 if "servicesCont" isnt a array of object with "count" and "serviceId" valid props', async () => {
     const response = await request(app)
       .post(route)
       .set(authHeaders)
@@ -98,7 +98,7 @@ describe('Create Services Pack', () => {
         price: 45,
         servicesCount: [
           {
-            serviceTypeId: '',
+            serviceId: '',
             quantity: 'a',
           },
         ],
@@ -117,7 +117,7 @@ describe('Create Services Pack', () => {
         price: 120,
         servicesCount: [
           {
-            serviceTypeId: serviceType.id,
+            serviceId: service.id,
             quantity: 2,
           },
         ],

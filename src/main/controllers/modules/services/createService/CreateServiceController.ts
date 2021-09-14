@@ -2,19 +2,19 @@ import { Request, Response } from 'express';
 import { body, ValidationChain } from 'express-validator';
 import { container } from 'tsyringe';
 
-import { CreateServiceTypeUseCase } from '@domain/modules/services/usecases/createServiceType/CreateServiceTypeUseCase';
+import { CreateServiceUseCase } from '@domain/modules/services/usecases/createService';
 import { IController } from '@main/interfaces/IController';
 
-export class CreateServiceTypeController implements IController {
-  private readonly usecase: CreateServiceTypeUseCase;
+export class CreateServiceController implements IController {
+  private readonly usecase: CreateServiceUseCase;
 
   constructor() {
-    this.usecase = container.resolve(CreateServiceTypeUseCase);
+    this.usecase = container.resolve(CreateServiceUseCase);
   }
 
   validate(): ValidationChain[] {
     return [
-      body('name', 'Fill the service type name!').exists({ checkFalsy: true }),
+      body('name', 'Param "name" is missing!').exists({ checkFalsy: true }),
     ];
   }
 

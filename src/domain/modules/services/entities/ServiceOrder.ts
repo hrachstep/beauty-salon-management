@@ -1,10 +1,10 @@
-import { ServiceType } from './ServiceType';
+import { Service } from './Service';
 
 export type ServiceOrder = {
   id?: string;
   customer?: string;
   servicesDoneIds: string[];
-  servicesDone?: ServiceType[];
+  servicesDone?: Service[];
   date: Date;
   price?: number;
   isFromPack?: boolean;

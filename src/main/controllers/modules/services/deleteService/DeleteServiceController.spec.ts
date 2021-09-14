@@ -6,13 +6,14 @@ import { mockAuthProvider } from '@shared/tests/mockAuthProvider';
 
 mockAuthProvider();
 
-describe('Delete Service Type controller', () => {
+describe('Delete Service controller', () => {
   const app = createApp();
+  const route = '/services';
   const id = '1234';
 
   it('should send status 204 with no response', async () => {
     const response = await request(app)
-      .delete(`/service-types/${id}`)
+      .delete(`${route}/${id}`)
       .set(authHeaders);
 
     expect(response.statusCode).toBe(204);
@@ -20,7 +21,7 @@ describe('Delete Service Type controller', () => {
 
   it('should send status 401 when authentications headers is invalid', async () => {
     const response = await request(app)
-      .delete(`/service-types/${id}`);
+      .delete(`${route}/${id}`);
 
     expect(response.statusCode).toBe(401);
   });

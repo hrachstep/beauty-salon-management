@@ -1,15 +1,15 @@
 import { Router } from 'express';
 
 import { ensureAuthenticated } from '../middlewares/ensureAuthenticated';
-import ordersPackRoutes from './ordersPack.routes';
+import ordersPackRoutes from './ordersPacks.routes';
 import serviceOrdersRoutes from './serviceOrders.routes';
-import serviceTypesRoutes from './serviceTypes.routes';
+import servicesRoutes from './services.routes';
 
 const router = Router();
 
 router.use(ensureAuthenticated);
-router.use('/service-types', serviceTypesRoutes);
-router.use('/service-orders', serviceOrdersRoutes);
 router.use('/orders-packs', ordersPackRoutes);
+router.use('/services', servicesRoutes);
+router.use('/service-orders', serviceOrdersRoutes);
 
 export { router };

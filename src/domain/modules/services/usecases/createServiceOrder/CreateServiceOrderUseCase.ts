@@ -3,14 +3,14 @@ import { v4 as uuidV4 } from 'uuid';
 
 import { ServiceOrder } from '@domain/modules/services/entities/ServiceOrder';
 import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
-import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
 @injectable()
 export class CreateServiceOrderUseCase {
   constructor(
-    @inject('ServiceTypeRepository')
-    private serviceTypeRepository: IServiceTypeRepository,
+    @inject('ServiceRepository')
+    private serviceRepository: IServiceRepository,
 
     @inject('ServiceOrderRepository')
     private serviceOrdersRepository: IServiceOrderRepository,
@@ -28,7 +28,7 @@ export class CreateServiceOrderUseCase {
 
     if (!servicesDoneIds?.length) throw new ApiError('You must send the Services Done Ids!');
 
-    const existentsServicesTypes = await this.serviceTypeRepository.findByIds(servicesDoneIds);
+    const existentsServicesTypes = await this.serviceRepository.findByIds(servicesDoneIds);
 
     if (existentsServicesTypes.length < servicesDoneIds.length) {
       throw new ApiError('Service Type doesnt exists!');

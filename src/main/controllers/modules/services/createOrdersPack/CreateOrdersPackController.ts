@@ -18,7 +18,7 @@ export class CreateOrdersPackController implements IController {
       body('price', 'Fill correct price!').isNumeric(),
       body('startDate', 'Fill correct date!').isDate(),
       body('servicesCount', 'Fill the services count!').isArray({ min: 1 }),
-      body('servicesCount.*.serviceTypeId', 'Fill a correct serviceTypeId on servicesCount').notEmpty(),
+      body('servicesCount.*.serviceId', 'Fill a correct serviceId on servicesCount').notEmpty(),
       body('servicesCount.*.quantity', 'Fill a correct quantity on servicesCount').isInt({ min: 1 }),
     ];
   }

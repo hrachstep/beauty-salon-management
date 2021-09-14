@@ -1,16 +1,16 @@
-import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
-import { CreateServiceTypeUseCase } from './CreateServiceTypeUseCase';
+import { CreateServiceUseCase } from './CreateServiceUseCase';
 
-const mockServiceType = {
+const mockService = {
   id: 'bla',
   name: 'Lucas',
 };
 
-describe('Create Service Type', () => {
-  let usecase: CreateServiceTypeUseCase;
-  let repository: IServiceTypeRepository;
+describe('Create Service', () => {
+  let usecase: CreateServiceUseCase;
+  let repository: IServiceRepository;
 
   beforeEach(() => {
     repository = {
@@ -23,28 +23,28 @@ describe('Create Service Type', () => {
       update: null,
     };
 
-    usecase = new CreateServiceTypeUseCase(repository);
+    usecase = new CreateServiceUseCase(repository);
   });
 
   it('should create a new service type', async () => {
-    const response = await usecase.execute(mockServiceType);
+    const response = await usecase.execute(mockService);
 
     expect(response).toHaveProperty('id');
     expect(response.id).toBeTruthy();
   });
 
   it('should persist created object on database', async () => {
-    const response = await usecase.execute(mockServiceType);
+    const response = await usecase.execute(mockService);
 
     expect(repository.create).toBeCalledWith(response);
   });
 
   it('should not create if name already exists', async () => {
-    repository.findByName = jest.fn(() => Promise.resolve(mockServiceType));
-    usecase = new CreateServiceTypeUseCase(repository);
+    repository.findByName = jest.fn(() => Promise.resolve(mockService));
+    usecase = new CreateServiceUseCase(repository);
 
     expect(async () => {
-      await usecase.execute(mockServiceType);
+      await usecase.execute(mockService);
     }).rejects.toBeInstanceOf(ApiError);
   });
 });

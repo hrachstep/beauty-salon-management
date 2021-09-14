@@ -1,14 +1,14 @@
-import { ServiceType } from '@domain/modules/services/entities/ServiceType';
+import { Service } from '@domain/modules/services/entities/Service';
 import { IOrdersPackRepository } from '@domain/modules/services/interfaces/IOrdersPackRepository';
-import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
 import { CreateOrdersPackUseCase } from './CreateOrdersPackUseCase';
 
 describe('Create Orders Pack', () => {
-  const servicesType: ServiceType[] = [];
+  const servicesType: Service[] = [];
   let createOrdersPackUsecase: CreateOrdersPackUseCase;
-  let serviceTypeRepository: IServiceTypeRepository;
+  let serviceRepository: IServiceRepository;
   let ordersPackRepository: IOrdersPackRepository;
 
   beforeAll(() => {
@@ -20,7 +20,7 @@ describe('Create Orders Pack', () => {
       id: '345',
     });
 
-    serviceTypeRepository = {
+    serviceRepository = {
       create: null,
       destroy: null,
       findAll: null,
@@ -42,7 +42,7 @@ describe('Create Orders Pack', () => {
 
   beforeEach(() => {
     createOrdersPackUsecase = new CreateOrdersPackUseCase(
-      serviceTypeRepository, ordersPackRepository,
+      serviceRepository, ordersPackRepository,
     );
   });
 
@@ -53,10 +53,10 @@ describe('Create Orders Pack', () => {
       startDate: new Date(),
       servicesCount: [{
         quantity: 4,
-        serviceTypeId: '1234',
+        serviceId: '1234',
       }, {
         quantity: 2,
-        serviceTypeId: '5678',
+        serviceId: '5678',
       }],
     });
 
@@ -66,7 +66,7 @@ describe('Create Orders Pack', () => {
 
   it('should not create a pack if any service type doesnt exists', async () => {
     const customRepository = {
-      ...serviceTypeRepository,
+      ...serviceRepository,
       findByIds: jest.fn(() => Promise.resolve([])),
     };
 
@@ -81,10 +81,10 @@ describe('Create Orders Pack', () => {
         startDate: new Date(),
         servicesCount: [{
           quantity: 4,
-          serviceTypeId: '1234',
+          serviceId: '1234',
         }, {
           quantity: 2,
-          serviceTypeId: '5678',
+          serviceId: '5678',
         }],
       });
     }).rejects.toBeInstanceOf(ApiError);
@@ -109,13 +109,13 @@ describe('Create Orders Pack', () => {
       servicesCount: [
         {
           quantity: 4,
-          serviceTypeId: '1234',
+          serviceId: '1234',
         }, {
           quantity: 4,
-          serviceTypeId: '1234',
+          serviceId: '1234',
         }, {
           quantity: 0,
-          serviceTypeId: '5678',
+          serviceId: '5678',
         }],
       services: [],
     });

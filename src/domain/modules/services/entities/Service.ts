@@ -1,4 +1,4 @@
-export type ServiceType = {
+export type Service = {
   id?: string;
   name: string
 };

@@ -17,7 +17,7 @@ import { inject, injectable } from 'tsyringe';
 
 import { ServiceOrder } from '@domain/modules/services/entities/ServiceOrder';
 import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
-import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
 
 import { Firebase } from '../shared/Firebase';
 
@@ -28,8 +28,8 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
   readonly table: CollectionReference;
 
   constructor(
-    @inject('ServiceTypeRepository')
-    private serviceTypeRepository: IServiceTypeRepository,
+    @inject('ServiceRepository')
+    private serviceRepository: IServiceRepository,
   ) {
     this.db = Firebase.database;
     this.tableName = 'service-orders';
@@ -59,7 +59,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
       id,
       customer,
       servicesDoneIds,
-      servicesDone: await this.serviceTypeRepository.findByIds(servicesDoneIds),
+      servicesDone: await this.serviceRepository.findByIds(servicesDoneIds),
       price,
       date,
       isFromPack,
@@ -90,7 +90,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
       id,
       customer,
       servicesDoneIds,
-      servicesDone: await this.serviceTypeRepository.findByIds(servicesDoneIds),
+      servicesDone: await this.serviceRepository.findByIds(servicesDoneIds),
       price,
       date,
       isFromPack,
@@ -108,7 +108,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
   ): Promise<ServiceOrder> {
     const data = snapshot.data();
 
-    const servicesDone = await this.serviceTypeRepository.findByIds(data.servicesDoneIds);
+    const servicesDone = await this.serviceRepository.findByIds(data.servicesDoneIds);
 
     return {
       ...data,

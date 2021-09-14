@@ -1,5 +1,5 @@
+import { Service } from './Service';
 import { ServiceOrder } from './ServiceOrder';
-import { ServiceType } from './ServiceType';
 
 export type OrdersPack = {
   id?: string;
@@ -7,8 +7,8 @@ export type OrdersPack = {
   services?: ServiceOrder[];
   servicesId?: string[];
   servicesCount: {
-    serviceType?: ServiceType;
-    serviceTypeId: string;
+    service?: Service;
+    serviceId: string;
     quantity: number;
   }[];
   price: number;

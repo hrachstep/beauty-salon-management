@@ -1,7 +1,7 @@
 import { OrdersPack } from '@domain/modules/services/entities/OrdersPack';
 import { IOrdersPackRepository } from '@domain/modules/services/interfaces/IOrdersPackRepository';
 import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
-import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
 import { AddServiceOrderOnOrdersPackUseCase } from './AddServiceOrderOnOrdersPackUseCase';
@@ -10,7 +10,7 @@ describe('Add Service Order on Orders Pack', () => {
   let usecase: AddServiceOrderOnOrdersPackUseCase;
   let OrdersPackRepository: IOrdersPackRepository;
   let serviceOrdersRepository: IServiceOrderRepository;
-  let serviceTypeRepository: IServiceTypeRepository;
+  let serviceRepository: IServiceRepository;
 
   const mockPack: OrdersPack = {
     id: '12345',
@@ -20,18 +20,18 @@ describe('Add Service Order on Orders Pack', () => {
     servicesCount: [
       {
         quantity: 4,
-        serviceTypeId: '1234',
+        serviceId: '1234',
       },
       {
         quantity: 2,
-        serviceTypeId: '5678',
+        serviceId: '5678',
       },
     ],
     services: [],
   };
 
   beforeEach(() => {
-    serviceTypeRepository = {
+    serviceRepository = {
       create: null,
       update: null,
       findAll: null,
@@ -67,7 +67,7 @@ describe('Add Service Order on Orders Pack', () => {
     };
 
     usecase = new AddServiceOrderOnOrdersPackUseCase(
-      serviceTypeRepository,
+      serviceRepository,
       serviceOrdersRepository,
       OrdersPackRepository,
     );
@@ -107,7 +107,7 @@ describe('Add Service Order on Orders Pack', () => {
     OrdersPackRepository.findById = jest.fn(() => Promise.resolve(newMockPack));
 
     usecase = new AddServiceOrderOnOrdersPackUseCase(
-      serviceTypeRepository,
+      serviceRepository,
       serviceOrdersRepository,
       OrdersPackRepository,
     );

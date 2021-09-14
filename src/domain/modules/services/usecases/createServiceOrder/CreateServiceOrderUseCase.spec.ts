@@ -1,5 +1,5 @@
 import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
-import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
 import { CreateServiceOrderUseCase } from './CreateServiceOrderUseCase';
@@ -7,10 +7,10 @@ import { CreateServiceOrderUseCase } from './CreateServiceOrderUseCase';
 describe('Create Service Order', () => {
   let usecase: CreateServiceOrderUseCase;
   let serviceOrderRepository: IServiceOrderRepository;
-  let serviceTypeRepository: IServiceTypeRepository;
+  let serviceRepository: IServiceRepository;
 
   beforeEach(() => {
-    serviceTypeRepository = {
+    serviceRepository = {
       create: null,
       update: null,
       destroy: null,
@@ -36,7 +36,7 @@ describe('Create Service Order', () => {
       findByMonth: null,
     };
 
-    usecase = new CreateServiceOrderUseCase(serviceTypeRepository, serviceOrderRepository);
+    usecase = new CreateServiceOrderUseCase(serviceRepository, serviceOrderRepository);
   });
 
   it('should create a new service', async () => {
@@ -64,7 +64,7 @@ describe('Create Service Order', () => {
 
   it('should not create if any service type doesnt exists', async () => {
     const customRepository = {
-      ...serviceTypeRepository,
+      ...serviceRepository,
       findByIds: jest.fn(() => Promise.resolve([])),
     };
 

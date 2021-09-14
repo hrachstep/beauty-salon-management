@@ -1,25 +1,25 @@
 import request from 'supertest';
 
 import { OrdersPack } from '@domain/modules/services/entities/OrdersPack';
-import { ServiceType } from '@domain/modules/services/entities/ServiceType';
+import { Service } from '@domain/modules/services/entities/Service';
 import { OrdersPackRepository } from '@infrastructure/repositories/OrdersPackRepository';
 import { ServiceOrderRepository } from '@infrastructure/repositories/ServiceOrderRepository';
-import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
+import { ServiceRepository } from '@infrastructure/repositories/ServiceRepository';
 import { createApp } from '@main/config/app';
 import { authHeaders } from '@shared/tests/authHeaders';
 import { mockAuthProvider } from '@shared/tests/mockAuthProvider';
 
 mockAuthProvider();
 
-describe('Add Service Done on Services Pack', () => {
-  let serviceType: ServiceType;
+describe('Add Service Order on Orders Pack', () => {
+  let service: Service;
   let pack: OrdersPack;
 
-  const serviceTypesRepository = new ServiceTypeRepository();
-  const servicesRepository = new ServiceOrderRepository(serviceTypesRepository);
+  const servicesRepository = new ServiceRepository();
+  const serviceOrdersRepository = new ServiceOrderRepository(servicesRepository);
   const ordersPackRepository = new OrdersPackRepository(
-    serviceTypesRepository,
     servicesRepository,
+    serviceOrdersRepository,
   );
 
   const app = createApp();
@@ -27,11 +27,11 @@ describe('Add Service Done on Services Pack', () => {
 
   beforeAll(async () => {
     let response = await request(app)
-      .post('/service-types')
+      .post('/services')
       .set(authHeaders)
       .send({ name: 'Fake Random Name' });
 
-    serviceType = response.body;
+    service = response.body;
 
     response = await request(app)
       .post('/orders-packs')
@@ -42,7 +42,7 @@ describe('Add Service Done on Services Pack', () => {
         startDate: '2021-09-04',
         servicesCount: [
           {
-            serviceTypeId: serviceType.id,
+            serviceId: service.id,
             quantity: 1,
           },
         ],
@@ -52,7 +52,7 @@ describe('Add Service Done on Services Pack', () => {
   });
 
   afterAll(async () => {
-    if (serviceType?.id) await serviceTypesRepository.destroy(serviceType.id);
+    if (service?.id) await servicesRepository.destroy(service.id);
     if (pack?.id) await ordersPackRepository.destroy(pack.id);
   });
 
@@ -62,7 +62,7 @@ describe('Add Service Done on Services Pack', () => {
       .set(authHeaders)
       .send({
         date: 'invalid date',
-        servicesDoneIds: [serviceType.id],
+        servicesDoneIds: [service.id],
       });
 
     expect(response.statusCode).toBe(400);
@@ -97,7 +97,7 @@ describe('Add Service Done on Services Pack', () => {
       .set(authHeaders)
       .send({
         date: '2021-09-04',
-        servicesDoneIds: [serviceType.id],
+        servicesDoneIds: [service.id],
       });
 
     const { id } = response.body;

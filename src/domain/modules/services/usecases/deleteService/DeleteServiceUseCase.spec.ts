@@ -1,9 +1,9 @@
-import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
 
-import { DeleteServiceTypeUsecase } from './DeleteServiceTypeUseCase';
+import { DeleteServiceUsecase } from './DeleteServiceUseCase';
 
-describe('Delete Service Type usecase', () => {
-  const repository: IServiceTypeRepository = {
+describe('Delete Service usecase', () => {
+  const repository: IServiceRepository = {
     create: null,
     destroy: jest.fn(),
     findAll: null,
@@ -13,7 +13,7 @@ describe('Delete Service Type usecase', () => {
     update: null,
   };
 
-  const usecase = new DeleteServiceTypeUsecase(repository);
+  const usecase = new DeleteServiceUsecase(repository);
 
   it('should call repository with passed "ID"', async () => {
     const id = '12345';

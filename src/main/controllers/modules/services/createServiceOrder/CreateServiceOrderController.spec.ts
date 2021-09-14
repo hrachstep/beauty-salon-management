@@ -1,8 +1,8 @@
 import request from 'supertest';
 
-import { ServiceType } from '@domain/modules/services/entities/ServiceType';
+import { Service } from '@domain/modules/services/entities/Service';
 import { ServiceOrderRepository } from '@infrastructure/repositories/ServiceOrderRepository';
-import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
+import { ServiceRepository } from '@infrastructure/repositories/ServiceRepository';
 import { createApp } from '@main/config/app';
 import { authHeaders } from '@shared/tests/authHeaders';
 import { mockAuthProvider } from '@shared/tests/mockAuthProvider';
@@ -10,23 +10,23 @@ import { mockAuthProvider } from '@shared/tests/mockAuthProvider';
 mockAuthProvider();
 
 describe('Create Service Order Controller', () => {
-  let serviceType: ServiceType;
+  let service: Service;
 
-  const serviceTypeRepository = new ServiceTypeRepository();
-  const serviceOrdersRepository = new ServiceOrderRepository(serviceTypeRepository);
+  const serviceRepository = new ServiceRepository();
+  const serviceOrdersRepository = new ServiceOrderRepository(serviceRepository);
 
   const app = createApp();
   const route = '/service-orders';
 
   beforeAll(async () => {
-    serviceType = await serviceTypeRepository.create({
+    service = await serviceRepository.create({
       id: 'test-id',
       name: 'Fake Name',
     });
   });
 
   afterAll(async () => {
-    if (serviceType.id) { await serviceTypeRepository.destroy(serviceType.id); }
+    if (service.id) { await serviceRepository.destroy(service.id); }
   });
 
   it('should return status 400 if customer is empty', async () => {
@@ -88,7 +88,7 @@ describe('Create Service Order Controller', () => {
       .send({
         customer: 'Fake Name',
         price: 45,
-        servicesDoneIds: [serviceType.id],
+        servicesDoneIds: [service.id],
         date: '2021-09-03',
       });
 

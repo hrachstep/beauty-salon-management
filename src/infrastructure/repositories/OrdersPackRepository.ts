@@ -18,7 +18,7 @@ import { inject, injectable } from 'tsyringe';
 import { OrdersPack } from '@domain/modules/services/entities/OrdersPack';
 import { IOrdersPackRepository } from '@domain/modules/services/interfaces/IOrdersPackRepository';
 import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
-import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
 
 import { Firebase } from '../shared/Firebase';
 
@@ -29,8 +29,8 @@ export class OrdersPackRepository implements IOrdersPackRepository {
   readonly table: CollectionReference;
 
   constructor(
-    @inject('ServiceTypeRepository')
-    private serviceTypeRepository: IServiceTypeRepository,
+    @inject('ServiceRepository')
+    private serviceRepository: IServiceRepository,
 
     @inject('ServiceOrderRepository')
     private serviceOrderRepository: IServiceOrderRepository,
@@ -145,7 +145,7 @@ export class OrdersPackRepository implements IOrdersPackRepository {
     const servicesCount = await Promise.all(
       data.servicesCount.map(async (item) => ({
         ...item,
-        serviceType: await this.serviceTypeRepository.findById(item.serviceTypeId),
+        service: await this.serviceRepository.findById(item.serviceId),
       })),
     );
 
