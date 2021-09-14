@@ -5,7 +5,7 @@ import { container } from 'tsyringe';
 import { ListServiceOrderByIdUseCase } from '@domain/modules/services/usecases/listServiceOrderById';
 import { IController } from '@main/interfaces/IController';
 
-export class ListServiceByIdController implements IController {
+export class ListServiceOrderByIdController implements IController {
   private readonly usecase: ListServiceOrderByIdUseCase;
 
   constructor() {

@@ -2,7 +2,7 @@ import { Router } from 'express';
 
 import { CreateServiceOrderController } from '@main/controllers/modules/services/createServiceOrder';
 import { DeleteServiceOrderController } from '@main/controllers/modules/services/deleteServiceOrder';
-import { ListServiceByIdController } from '@main/controllers/modules/services/listServiceOrderById';
+import { ListServiceOrderByIdController } from '@main/controllers/modules/services/listServiceOrderById';
 import { ListServiceOrdersController } from '@main/controllers/modules/services/listServiceOrders';
 import { UploadImageController } from '@main/controllers/modules/services/uploadImage/UploadImageController';
 
@@ -13,7 +13,7 @@ import uploadImageMiddleware from '../middlewares/uploadImageMiddleware';
 const router = Router();
 
 const listServiceOrdersControler = new ListServiceOrdersController();
-const listServiceOrderByIdController = new ListServiceByIdController();
+const listServiceOrderByIdController = new ListServiceOrderByIdController();
 const createServiceOrderController = new CreateServiceOrderController();
 const deleteServiceOrderController = new DeleteServiceOrderController();
 const uploadImageController = new UploadImageController();

@@ -1,3 +1,3 @@
-import { ListServiceByIdController } from './ListServiceByIdController';
+import { ListServiceOrderByIdController } from './ListServiceOrderByIdController';
 
-export { ListServiceByIdController };
+export { ListServiceOrderByIdController };
