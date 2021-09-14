@@ -1,8 +1,8 @@
 import { container } from 'tsyringe';
 
-import { Auth } from '@domain/entities/Auth';
-import { User } from '@domain/entities/User';
-import { IAuthProvider } from '@domain/interfaces/IAuthProvider';
+import { Auth } from '@domain/modules/users/entities/Auth';
+import { User } from '@domain/modules/users/entities/User';
+import { IAuthProvider } from '@domain/modules/users/interfaces/IAuthProvider';
 
 class MockAuthProvider implements IAuthProvider {
   async verify(payload: Auth): Promise<User> {

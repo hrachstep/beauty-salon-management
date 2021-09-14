@@ -15,9 +15,9 @@ import {
 } from 'firebase/firestore';
 import { inject, injectable } from 'tsyringe';
 
-import { Service } from '@domain/entities/Service';
-import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
-import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
+import { Service } from '@domain/modules/services/entities/Service';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
 
 import { Firebase } from '../shared/Firebase';
 

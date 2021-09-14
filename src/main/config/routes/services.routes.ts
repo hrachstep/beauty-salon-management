@@ -1,10 +1,10 @@
 import { Router } from 'express';
 
-import { CreateServiceController } from '@main/controllers/createService/CreateServiceController';
-import { DeleteServiceController } from '@main/controllers/deleteService/DeleteServiceController';
-import { ListServiceByIdController } from '@main/controllers/listServiceById/ListServiceByIdController';
-import { ListServicesController } from '@main/controllers/listServices/ListServicesController';
-import { UploadImageController } from '@main/controllers/uploadImage/UploadImageController';
+import { CreateServiceController } from '@main/controllers/modules/services/createService/CreateServiceController';
+import { DeleteServiceController } from '@main/controllers/modules/services/deleteService/DeleteServiceController';
+import { ListServiceByIdController } from '@main/controllers/modules/services/listServiceById/ListServiceByIdController';
+import { ListServicesController } from '@main/controllers/modules/services/listServices/ListServicesController';
+import { UploadImageController } from '@main/controllers/modules/services/uploadImage/UploadImageController';
 
 import { checkErrorMiddleware } from '../middlewares/checkErrorMiddleware';
 import { deleteUploadedFileOnRequestError } from '../middlewares/deleteUploadedFileOnRequestError';

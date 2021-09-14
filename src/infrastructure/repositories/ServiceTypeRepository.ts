@@ -13,8 +13,8 @@ import {
 } from 'firebase/firestore';
 import { injectable } from 'tsyringe';
 
-import { ServiceType } from '@domain/entities/ServiceType';
-import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
+import { ServiceType } from '@domain/modules/services/entities/ServiceType';
+import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
 
 import { Firebase } from '../shared/Firebase';
 
