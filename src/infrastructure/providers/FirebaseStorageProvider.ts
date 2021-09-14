@@ -5,7 +5,7 @@ import fs from 'fs';
 import path from 'path';
 import { injectable } from 'tsyringe';
 
-import { IStorageProvider } from '@domain/interfaces/IStorageProvider';
+import { IStorageProvider } from '@domain/modules/services/interfaces/IStorageProvider';
 
 import { Firebase } from '../shared/Firebase';
 

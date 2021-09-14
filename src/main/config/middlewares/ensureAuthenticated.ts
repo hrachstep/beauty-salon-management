@@ -1,7 +1,7 @@
 import { NextFunction, Request, Response } from 'express';
 import { container } from 'tsyringe';
 
-import { VerifyAuthTokenUseCase } from '@domain/usecases/verifyAuthToken/VerifyAuthTokenUseCase';
+import { VerifyAuthTokenUseCase } from '@domain/modules/users/usecases/verifyAuthToken/VerifyAuthTokenUseCase';
 import { ApiError } from '@shared/errors/ApiError';
 
 export const ensureAuthenticated = async (

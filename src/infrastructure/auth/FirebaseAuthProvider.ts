@@ -1,9 +1,9 @@
 import 'dotenv/config';
 import { OAuthCredential, signInWithCredential } from 'firebase/auth';
 
-import { Auth } from '@domain/entities/Auth';
-import { User } from '@domain/entities/User';
-import { IAuthProvider } from '@domain/interfaces/IAuthProvider';
+import { Auth } from '@domain/modules/users/entities/Auth';
+import { User } from '@domain/modules/users/entities/User';
+import { IAuthProvider } from '@domain/modules/users/interfaces/IAuthProvider';
 import { Firebase } from '@infrastructure/shared/Firebase';
 
 export class FirebaseAuthProvider implements IAuthProvider {

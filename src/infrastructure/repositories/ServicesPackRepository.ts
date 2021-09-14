@@ -15,10 +15,10 @@ import {
 } from 'firebase/firestore';
 import { inject, injectable } from 'tsyringe';
 
-import { ServicesPack } from '@domain/entities/ServicesPack';
-import { IServiceRepository } from '@domain/interfaces/IServiceRepository';
-import { IServicesPackRepository } from '@domain/interfaces/IServicesPackRepository';
-import { IServiceTypeRepository } from '@domain/interfaces/IServiceTypeRepository';
+import { ServicesPack } from '@domain/modules/services/entities/ServicesPack';
+import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { IServicesPackRepository } from '@domain/modules/services/interfaces/IServicesPackRepository';
+import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
 
 import { Firebase } from '../shared/Firebase';
 
