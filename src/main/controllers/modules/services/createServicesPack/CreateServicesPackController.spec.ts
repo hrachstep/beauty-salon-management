@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { ServiceType } from '@domain/modules/services/entities/ServiceType';
-import { ServiceRepository } from '@infrastructure/repositories/ServiceRepository';
+import { ServiceOrderRepository } from '@infrastructure/repositories/ServiceOrderRepository';
 import { ServicesPackRepository } from '@infrastructure/repositories/ServicesPackRepository';
 import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
 import { createApp } from '@main/config/app';
@@ -12,7 +12,7 @@ mockAuthProvider();
 
 describe('Create Services Pack', () => {
   const serviceTypesRepository = new ServiceTypeRepository();
-  const servicesRepository = new ServiceRepository(serviceTypesRepository);
+  const servicesRepository = new ServiceOrderRepository(serviceTypesRepository);
   const servicesPackRepository = new ServicesPackRepository(
     serviceTypesRepository,
     servicesRepository,

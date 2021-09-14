@@ -1,12 +1,12 @@
-import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
 import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
-import { CreateServiceUseCase } from './CreateServiceUseCase';
+import { CreateServiceOrderUseCase } from './CreateServiceOrderUseCase';
 
-describe('Create Service', () => {
-  let usecase: CreateServiceUseCase;
-  let serviceRepository: IServiceRepository;
+describe('Create Service Order', () => {
+  let usecase: CreateServiceOrderUseCase;
+  let serviceOrderRepository: IServiceOrderRepository;
   let serviceTypeRepository: IServiceTypeRepository;
 
   beforeEach(() => {
@@ -26,7 +26,7 @@ describe('Create Service', () => {
       findByName: null,
     };
 
-    serviceRepository = {
+    serviceOrderRepository = {
       create: jest.fn((x) => Promise.resolve(x)),
       update: null,
       destroy: null,
@@ -36,7 +36,7 @@ describe('Create Service', () => {
       findByMonth: null,
     };
 
-    usecase = new CreateServiceUseCase(serviceTypeRepository, serviceRepository);
+    usecase = new CreateServiceOrderUseCase(serviceTypeRepository, serviceOrderRepository);
   });
 
   it('should create a new service', async () => {
@@ -59,7 +59,7 @@ describe('Create Service', () => {
       price: 45,
     });
 
-    expect(serviceRepository.create).toBeCalledWith(service);
+    expect(serviceOrderRepository.create).toBeCalledWith(service);
   });
 
   it('should not create if any service type doesnt exists', async () => {
@@ -68,7 +68,7 @@ describe('Create Service', () => {
       findByIds: jest.fn(() => Promise.resolve([])),
     };
 
-    usecase = new CreateServiceUseCase(customRepository, serviceRepository);
+    usecase = new CreateServiceOrderUseCase(customRepository, serviceOrderRepository);
 
     expect(async () => {
       await usecase.execute({

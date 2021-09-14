@@ -6,9 +6,9 @@ import { mockAuthProvider } from '@shared/tests/mockAuthProvider';
 
 mockAuthProvider();
 
-describe('List Services controller', () => {
+describe('List Service Orders controller', () => {
   const app = createApp();
-  const route = '/services';
+  const route = '/service-orders';
 
   it('should return status 400 if "month" is invalid', async () => {
     const response = await request(app)

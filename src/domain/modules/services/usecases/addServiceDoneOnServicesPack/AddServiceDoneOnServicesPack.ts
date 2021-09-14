@@ -1,31 +1,31 @@
 import { injectable, inject } from 'tsyringe';
 
-import { Service } from '@domain/modules/services/entities/Service';
+import { ServiceOrder } from '@domain/modules/services/entities/ServiceOrder';
 import { ServicesPack } from '@domain/modules/services/entities/ServicesPack';
-import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
 import { IServicesPackRepository } from '@domain/modules/services/interfaces/IServicesPackRepository';
 import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
-import { CreateServiceUseCase } from '../createService/CreateServiceUseCase';
+import { CreateServiceOrderUseCase } from '../createServiceOrder';
 
 @injectable()
 export class AddServiceDoneOnServicesPack {
-  readonly createServiceUseCase: CreateServiceUseCase;
+  readonly createServiceOrderUseCase: CreateServiceOrderUseCase;
 
   constructor(
     @inject('ServiceTypeRepository')
     private serviceTypeRepository: IServiceTypeRepository,
 
-    @inject('ServiceRepository')
-    private servicesRepository: IServiceRepository,
+    @inject('ServiceOrderRepository')
+    private serviceOrdersRepository: IServiceOrderRepository,
 
     @inject('ServicesPackRepository')
     private servicesPackRepository: IServicesPackRepository,
   ) {
-    this.createServiceUseCase = new CreateServiceUseCase(
+    this.createServiceOrderUseCase = new CreateServiceOrderUseCase(
       this.serviceTypeRepository,
-      this.servicesRepository,
+      this.serviceOrdersRepository,
     );
   }
 
@@ -33,7 +33,7 @@ export class AddServiceDoneOnServicesPack {
     date,
     servicesDoneIds,
     image,
-  }: Service): Promise<ServicesPack> {
+  }: ServiceOrder): Promise<ServicesPack> {
     if (!servicesDoneIds?.length) throw new ApiError('No Services Done passed!');
 
     const pack = await this.servicesPackRepository.findById(packId);
@@ -47,7 +47,7 @@ export class AddServiceDoneOnServicesPack {
 
     if (countServicesDone + servicesDoneIds.length > countServicesToDo) throw new ApiError('No Services remaining!');
 
-    const service = await this.createServiceUseCase.execute({
+    const service = await this.createServiceOrderUseCase.execute({
       customer: pack.customer,
       date,
       servicesDoneIds,

@@ -1,9 +1,9 @@
-import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
 
-import { DeleteServiceUseCase } from './DeleteServiceUseCase';
+import { DeleteServiceOrderUseCase } from './DeleteServiceOrderUseCase';
 
-describe('Delete Service usecase', () => {
-  const repository: IServiceRepository = {
+describe('Delete Service Order usecase', () => {
+  const repository: IServiceOrderRepository = {
     create: null,
     destroy: jest.fn(),
     findAll: null,
@@ -13,7 +13,7 @@ describe('Delete Service usecase', () => {
     update: null,
   };
 
-  const usecase = new DeleteServiceUseCase(repository);
+  const usecase = new DeleteServiceOrderUseCase(repository);
 
   it('should call repository with passed "ID"', async () => {
     const id = '12345';

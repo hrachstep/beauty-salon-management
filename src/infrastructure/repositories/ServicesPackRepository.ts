@@ -16,7 +16,7 @@ import {
 import { inject, injectable } from 'tsyringe';
 
 import { ServicesPack } from '@domain/modules/services/entities/ServicesPack';
-import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
 import { IServicesPackRepository } from '@domain/modules/services/interfaces/IServicesPackRepository';
 import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
 
@@ -32,8 +32,8 @@ export class ServicesPackRepository implements IServicesPackRepository {
     @inject('ServiceTypeRepository')
     private serviceTypeRepository: IServiceTypeRepository,
 
-    @inject('ServiceRepository')
-    private serviceRepository: IServiceRepository,
+    @inject('ServiceOrderRepository')
+    private serviceOrderRepository: IServiceOrderRepository,
   ) {
     this.db = Firebase.database;
     this.tableName = 'servicesPack';
@@ -139,7 +139,7 @@ export class ServicesPackRepository implements IServicesPackRepository {
     const data = snapshot.data() as ServicesPack;
 
     const services = data.servicesId?.length
-      ? await this.serviceRepository.findByIds(data.servicesId)
+      ? await this.serviceOrderRepository.findByIds(data.servicesId)
       : [];
 
     const servicesCount = await Promise.all(

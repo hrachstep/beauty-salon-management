@@ -1,6 +1,6 @@
 import { ServiceType } from './ServiceType';
 
-export type Service = {
+export type ServiceOrder = {
   id?: string;
   customer?: string;
   servicesDoneIds: string[];

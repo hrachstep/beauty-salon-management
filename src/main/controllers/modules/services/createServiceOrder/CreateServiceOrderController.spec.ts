@@ -1,7 +1,7 @@
 import request from 'supertest';
 
 import { ServiceType } from '@domain/modules/services/entities/ServiceType';
-import { ServiceRepository } from '@infrastructure/repositories/ServiceRepository';
+import { ServiceOrderRepository } from '@infrastructure/repositories/ServiceOrderRepository';
 import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
 import { createApp } from '@main/config/app';
 import { authHeaders } from '@shared/tests/authHeaders';
@@ -9,13 +9,14 @@ import { mockAuthProvider } from '@shared/tests/mockAuthProvider';
 
 mockAuthProvider();
 
-describe('Create Service Controller', () => {
+describe('Create Service Order Controller', () => {
   let serviceType: ServiceType;
 
   const serviceTypeRepository = new ServiceTypeRepository();
-  const servicesRepository = new ServiceRepository(serviceTypeRepository);
+  const serviceOrdersRepository = new ServiceOrderRepository(serviceTypeRepository);
 
   const app = createApp();
+  const route = '/service-orders';
 
   beforeAll(async () => {
     serviceType = await serviceTypeRepository.create({
@@ -30,7 +31,7 @@ describe('Create Service Controller', () => {
 
   it('should return status 400 if customer is empty', async () => {
     const result = await request(app)
-      .post('/services')
+      .post(route)
       .set(authHeaders)
       .send({
         price: 45,
@@ -43,7 +44,7 @@ describe('Create Service Controller', () => {
 
   it('should return status 400 if price is empty or not numeric', async () => {
     const result = await request(app)
-      .post('/services')
+      .post(route)
       .set(authHeaders)
       .send({
         customer: 'Fake Name',
@@ -56,7 +57,7 @@ describe('Create Service Controller', () => {
 
   it('should send status 401 when authentications headers is invalid', async () => {
     const response = await request(app)
-      .post('/services')
+      .post(route)
       .send({
         customer: 'Fake Name',
         servicesDoneIds: ['1234', '5678'],
@@ -68,7 +69,7 @@ describe('Create Service Controller', () => {
 
   it('should return status 400 if date is invalid', async () => {
     const result = await request(app)
-      .post('/services')
+      .post(route)
       .set(authHeaders)
       .send({
         customer: 'Fake Name',
@@ -82,7 +83,7 @@ describe('Create Service Controller', () => {
 
   it('should return status 201 on success', async () => {
     const result = await request(app)
-      .post('/services')
+      .post(route)
       .set(authHeaders)
       .send({
         customer: 'Fake Name',
@@ -95,6 +96,6 @@ describe('Create Service Controller', () => {
 
     expect(result.statusCode).toBe(201);
 
-    await servicesRepository.destroy(id);
+    await serviceOrdersRepository.destroy(id);
   });
 });

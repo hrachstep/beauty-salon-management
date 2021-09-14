@@ -1,14 +1,14 @@
-import { Service } from '@domain/modules/services/entities/Service';
-import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { ServiceOrder } from '@domain/modules/services/entities/ServiceOrder';
+import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
-import { ListServiceByIdUseCase } from './ListServiceByIdUseCase';
+import { ListServiceOrderByIdUseCase } from './ListServiceOrderByIdUseCase';
 
-describe('List Service by Id', () => {
-  let useCase: ListServiceByIdUseCase;
-  let serviceRepository: IServiceRepository;
+describe('List Service Order by Id', () => {
+  let useCase: ListServiceOrderByIdUseCase;
+  let serviceOrderRepository: IServiceOrderRepository;
 
-  const mock: Service = {
+  const mock: ServiceOrder = {
     date: new Date(),
     customer: 'Fake name',
     id: '12345',
@@ -18,7 +18,7 @@ describe('List Service by Id', () => {
   };
 
   beforeEach(() => {
-    serviceRepository = {
+    serviceOrderRepository = {
       create: null,
       destroy: null,
       findAll: null,
@@ -28,18 +28,18 @@ describe('List Service by Id', () => {
       update: null,
     };
 
-    useCase = new ListServiceByIdUseCase(serviceRepository);
+    useCase = new ListServiceOrderByIdUseCase(serviceOrderRepository);
   });
 
   it('should call repository with passed id', async () => {
     const id = '1234';
     await useCase.execute(id);
-    expect(serviceRepository.findById).toHaveBeenCalledWith(id);
+    expect(serviceOrderRepository.findById).toHaveBeenCalledWith(id);
   });
 
   it('should return null when id dont exists', async () => {
     expect(async () => {
-      serviceRepository.findById = jest.fn(() => Promise.resolve(null));
+      serviceOrderRepository.findById = jest.fn(() => Promise.resolve(null));
 
       await useCase.execute('1234');
     }).rejects.toBeInstanceOf(ApiError);

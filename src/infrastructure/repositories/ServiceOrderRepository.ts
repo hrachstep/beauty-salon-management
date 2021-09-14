@@ -15,14 +15,14 @@ import {
 } from 'firebase/firestore';
 import { inject, injectable } from 'tsyringe';
 
-import { Service } from '@domain/modules/services/entities/Service';
-import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { ServiceOrder } from '@domain/modules/services/entities/ServiceOrder';
+import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
 import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
 
 import { Firebase } from '../shared/Firebase';
 
 @injectable()
-export class ServiceRepository implements IServiceRepository {
+export class ServiceOrderRepository implements IServiceOrderRepository {
   readonly db: Firestore;
   readonly tableName: string;
   readonly table: CollectionReference;
@@ -32,7 +32,7 @@ export class ServiceRepository implements IServiceRepository {
     private serviceTypeRepository: IServiceTypeRepository,
   ) {
     this.db = Firebase.database;
-    this.tableName = 'services';
+    this.tableName = 'service-orders';
     this.table = collection(this.db, this.tableName);
   }
 
@@ -44,7 +44,7 @@ export class ServiceRepository implements IServiceRepository {
     date,
     isFromPack,
     image,
-  }: Service): Promise<Service> {
+  }: ServiceOrder): Promise<ServiceOrder> {
     await setDoc(doc(this.table, id), {
       id,
       customer,
@@ -75,7 +75,7 @@ export class ServiceRepository implements IServiceRepository {
     date,
     isFromPack,
     image,
-  }: Service): Promise<Service> {
+  }: ServiceOrder): Promise<ServiceOrder> {
     await setDoc(doc(this.table, id), {
       id,
       customer,
@@ -103,7 +103,9 @@ export class ServiceRepository implements IServiceRepository {
     return id;
   }
 
-  private async getServiceData(snapshot: QueryDocumentSnapshot<DocumentData>): Promise<Service> {
+  private async getServiceData(
+    snapshot: QueryDocumentSnapshot<DocumentData>,
+  ): Promise<ServiceOrder> {
     const data = snapshot.data();
 
     const servicesDone = await this.serviceTypeRepository.findByIds(data.servicesDoneIds);
@@ -111,7 +113,7 @@ export class ServiceRepository implements IServiceRepository {
     return {
       ...data,
       servicesDone,
-    } as Service;
+    } as ServiceOrder;
   }
 
   private async convertSnapshotToServiceList(items: QuerySnapshot<DocumentData>) {
@@ -120,7 +122,7 @@ export class ServiceRepository implements IServiceRepository {
     );
   }
 
-  async findAll(): Promise<Service[]> {
+  async findAll(): Promise<ServiceOrder[]> {
     const snapshot = await getDocs(query(this.table));
 
     if (snapshot.empty) return [];
@@ -128,7 +130,7 @@ export class ServiceRepository implements IServiceRepository {
     return this.convertSnapshotToServiceList(snapshot);
   }
 
-  async findByIds(ids: string[]): Promise<Service[]> {
+  async findByIds(ids: string[]): Promise<ServiceOrder[]> {
     const snapshot = await getDocs(query(this.table, where('id', 'in', ids)));
 
     if (snapshot.empty) return [];
@@ -136,7 +138,7 @@ export class ServiceRepository implements IServiceRepository {
     return this.convertSnapshotToServiceList(snapshot);
   }
 
-  async findByMonth(date: Date): Promise<Service[]> {
+  async findByMonth(date: Date): Promise<ServiceOrder[]> {
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
@@ -147,7 +149,7 @@ export class ServiceRepository implements IServiceRepository {
     return this.convertSnapshotToServiceList(snapshot);
   }
 
-  async findById(id: string): Promise<Service> {
+  async findById(id: string): Promise<ServiceOrder> {
     const snapshot = await getDoc(doc(this.table, id));
 
     if (!snapshot.exists()) return null;

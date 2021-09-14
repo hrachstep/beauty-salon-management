@@ -1,5 +1,5 @@
 import { ServicesPack } from '@domain/modules/services/entities/ServicesPack';
-import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
 import { IServicesPackRepository } from '@domain/modules/services/interfaces/IServicesPackRepository';
 import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
 import { ApiError } from '@shared/errors/ApiError';
@@ -9,7 +9,7 @@ import { AddServiceDoneOnServicesPack } from './AddServiceDoneOnServicesPack';
 describe('Add Service Done on Services Pack', () => {
   let usecase: AddServiceDoneOnServicesPack;
   let servicesPackRepository: IServicesPackRepository;
-  let servicesRepository: IServiceRepository;
+  let serviceOrdersRepository: IServiceOrderRepository;
   let serviceTypeRepository: IServiceTypeRepository;
 
   const mockPack: ServicesPack = {
@@ -56,7 +56,7 @@ describe('Add Service Done on Services Pack', () => {
       findByMonth: null,
     };
 
-    servicesRepository = {
+    serviceOrdersRepository = {
       create: jest.fn((x) => Promise.resolve(x)),
       destroy: null,
       findAll: null,
@@ -68,7 +68,7 @@ describe('Add Service Done on Services Pack', () => {
 
     usecase = new AddServiceDoneOnServicesPack(
       serviceTypeRepository,
-      servicesRepository,
+      serviceOrdersRepository,
       servicesPackRepository,
     );
   });
@@ -108,7 +108,7 @@ describe('Add Service Done on Services Pack', () => {
 
     usecase = new AddServiceDoneOnServicesPack(
       serviceTypeRepository,
-      servicesRepository,
+      serviceOrdersRepository,
       servicesPackRepository,
     );
 

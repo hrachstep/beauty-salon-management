@@ -1,10 +1,10 @@
-import { Service } from './Service';
+import { ServiceOrder } from './ServiceOrder';
 import { ServiceType } from './ServiceType';
 
 export type ServicesPack = {
   id?: string;
   customer: string;
-  services?: Service[];
+  services?: ServiceOrder[];
   servicesId?: string[];
   servicesCount: {
     serviceType?: ServiceType;

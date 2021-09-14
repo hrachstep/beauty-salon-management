@@ -2,14 +2,14 @@ import { Request, Response } from 'express';
 import { body, ValidationChain } from 'express-validator';
 import { container } from 'tsyringe';
 
-import { CreateServiceUseCase } from '@domain/modules/services/usecases/createService/CreateServiceUseCase';
+import { CreateServiceOrderUseCase } from '@domain/modules/services/usecases/createServiceOrder';
 import { IController } from '@main/interfaces/IController';
 
-export class CreateServiceController implements IController {
-  private readonly usecase: CreateServiceUseCase;
+export class CreateServiceOrderController implements IController {
+  private readonly usecase: CreateServiceOrderUseCase;
 
   constructor() {
-    this.usecase = container.resolve(CreateServiceUseCase);
+    this.usecase = container.resolve(CreateServiceOrderUseCase);
   }
 
   validate(): ValidationChain[] {

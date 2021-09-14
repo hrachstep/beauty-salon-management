@@ -2,7 +2,7 @@ import request from 'supertest';
 
 import { ServicesPack } from '@domain/modules/services/entities/ServicesPack';
 import { ServiceType } from '@domain/modules/services/entities/ServiceType';
-import { ServiceRepository } from '@infrastructure/repositories/ServiceRepository';
+import { ServiceOrderRepository } from '@infrastructure/repositories/ServiceOrderRepository';
 import { ServicesPackRepository } from '@infrastructure/repositories/ServicesPackRepository';
 import { ServiceTypeRepository } from '@infrastructure/repositories/ServiceTypeRepository';
 import { createApp } from '@main/config/app';
@@ -16,7 +16,7 @@ describe('Add Service Done on Services Pack', () => {
   let pack: ServicesPack;
 
   const serviceTypesRepository = new ServiceTypeRepository();
-  const servicesRepository = new ServiceRepository(serviceTypesRepository);
+  const servicesRepository = new ServiceOrderRepository(serviceTypesRepository);
   const servicesPackRepository = new ServicesPackRepository(
     serviceTypesRepository,
     servicesRepository,

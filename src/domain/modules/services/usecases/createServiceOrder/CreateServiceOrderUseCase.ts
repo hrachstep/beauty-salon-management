@@ -1,19 +1,19 @@
 import { inject, injectable } from 'tsyringe';
 import { v4 as uuidV4 } from 'uuid';
 
-import { Service } from '@domain/modules/services/entities/Service';
-import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { ServiceOrder } from '@domain/modules/services/entities/ServiceOrder';
+import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
 import { IServiceTypeRepository } from '@domain/modules/services/interfaces/IServiceTypeRepository';
 import { ApiError } from '@shared/errors/ApiError';
 
 @injectable()
-export class CreateServiceUseCase {
+export class CreateServiceOrderUseCase {
   constructor(
     @inject('ServiceTypeRepository')
     private serviceTypeRepository: IServiceTypeRepository,
 
-    @inject('ServiceRepository')
-    private servicesRepository: IServiceRepository,
+    @inject('ServiceOrderRepository')
+    private serviceOrdersRepository: IServiceOrderRepository,
   ) {}
 
   async execute({
@@ -23,7 +23,7 @@ export class CreateServiceUseCase {
     price,
     image = '',
     isFromPack = false,
-  }: Service): Promise<Service> {
+  }: ServiceOrder): Promise<ServiceOrder> {
     const id = uuidV4();
 
     if (!servicesDoneIds?.length) throw new ApiError('You must send the Services Done Ids!');
@@ -34,7 +34,7 @@ export class CreateServiceUseCase {
       throw new ApiError('Service Type doesnt exists!');
     }
 
-    const service = await this.servicesRepository.create({
+    const service = await this.serviceOrdersRepository.create({
       id,
       customer,
       date,
