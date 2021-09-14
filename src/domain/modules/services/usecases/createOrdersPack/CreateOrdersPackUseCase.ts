@@ -35,8 +35,8 @@ export class CreateOrdersPackUseCase {
     const pack = await this.ordersPackRepository.create({
       id: uuidV4(),
       servicesCount: filteredServicesCount,
-      services: [],
-      servicesId: [],
+      serviceOrders: [],
+      serviceOrdersId: [],
       customer,
       price,
       startDate,

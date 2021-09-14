@@ -19,18 +19,18 @@ export class CreateServiceOrderUseCase {
   async execute({
     customer,
     date,
-    servicesDoneIds,
+    servicesDoneId,
     price,
     image = '',
     isFromPack = false,
   }: ServiceOrder): Promise<ServiceOrder> {
     const id = uuidV4();
 
-    if (!servicesDoneIds?.length) throw new ApiError('You must send the Services Done Ids!');
+    if (!servicesDoneId?.length) throw new ApiError('You must send the Services Done Ids!');
 
-    const existentsServicesTypes = await this.serviceRepository.findByIds(servicesDoneIds);
+    const existentsServicesTypes = await this.serviceRepository.findByIds(servicesDoneId);
 
-    if (existentsServicesTypes.length < servicesDoneIds.length) {
+    if (existentsServicesTypes.length < servicesDoneId.length) {
       throw new ApiError('Service Type doesnt exists!');
     }
 
@@ -38,7 +38,7 @@ export class CreateServiceOrderUseCase {
       id,
       customer,
       date,
-      servicesDoneIds,
+      servicesDoneId,
       price,
       isFromPack,
       image,

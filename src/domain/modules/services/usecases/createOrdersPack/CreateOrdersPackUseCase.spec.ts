@@ -117,7 +117,7 @@ describe('Create Orders Pack', () => {
           quantity: 0,
           serviceId: '5678',
         }],
-      services: [],
+      serviceOrders: [],
     });
 
     expect(pack.servicesCount.filter((item) => item.quantity < 1)).toHaveLength(0);

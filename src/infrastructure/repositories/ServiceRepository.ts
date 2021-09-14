@@ -70,6 +70,8 @@ export class ServiceRepository implements IServiceRepository {
   }
 
   async findByIds(ids: string[]): Promise<Service[]> {
+    if (!ids?.length) return [];
+
     const snapshot = await getDocs(query(this.table, where('id', 'in', ids)));
 
     if (snapshot.empty) return [];

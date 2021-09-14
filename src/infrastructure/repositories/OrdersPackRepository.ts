@@ -45,7 +45,7 @@ export class OrdersPackRepository implements IOrdersPackRepository {
     customer,
     startDate,
     servicesCount,
-    servicesId,
+    serviceOrdersId,
     price,
   }: OrdersPack): Promise<OrdersPack> {
     await setDoc(doc(this.table, id), {
@@ -54,7 +54,7 @@ export class OrdersPackRepository implements IOrdersPackRepository {
       price,
       startDate,
       servicesCount,
-      servicesId,
+      serviceOrdersId,
     });
 
     return {
@@ -63,8 +63,8 @@ export class OrdersPackRepository implements IOrdersPackRepository {
       price,
       startDate,
       servicesCount,
-      servicesId,
-      services: [],
+      serviceOrdersId,
+      serviceOrders: [],
     };
   }
 
@@ -74,8 +74,8 @@ export class OrdersPackRepository implements IOrdersPackRepository {
     servicesCount,
     startDate,
     id,
-    servicesId,
-    services,
+    serviceOrdersId,
+    serviceOrders,
   }: OrdersPack): Promise<OrdersPack> {
     await setDoc(doc(this.table, id), {
       id,
@@ -83,7 +83,7 @@ export class OrdersPackRepository implements IOrdersPackRepository {
       price,
       startDate,
       servicesCount,
-      servicesId,
+      serviceOrdersId,
     });
 
     return {
@@ -92,8 +92,8 @@ export class OrdersPackRepository implements IOrdersPackRepository {
       price,
       startDate,
       servicesCount,
-      services,
-      servicesId,
+      serviceOrders,
+      serviceOrdersId,
     };
   }
 
@@ -138,8 +138,8 @@ export class OrdersPackRepository implements IOrdersPackRepository {
   private async getOrdersPackData(snapshot: QueryDocumentSnapshot<DocumentData>) {
     const data = snapshot.data() as OrdersPack;
 
-    const services = data.servicesId?.length
-      ? await this.serviceOrderRepository.findByIds(data.servicesId)
+    const serviceOrders = data.serviceOrdersId?.length
+      ? await this.serviceOrderRepository.findByIds(data.serviceOrdersId)
       : [];
 
     const servicesCount = await Promise.all(
@@ -152,7 +152,7 @@ export class OrdersPackRepository implements IOrdersPackRepository {
     return {
       ...data,
       servicesCount,
-      services,
+      serviceOrders,
     };
   }
 }

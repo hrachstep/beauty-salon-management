@@ -15,8 +15,8 @@ export class AddServiceOrderOnOrdersPackController implements IController {
   validate(): ValidationChain[] {
     return [
       body('date', 'Fill a correct "date" type!').isDate(),
-      body('servicesDoneIds', 'Fill at least one "serviceDoneIds"!').isArray({ min: 1 }),
-      body('servicesDoneIds.*', 'Fill a correct "id" on "serviceDoneIds"!').isString(),
+      body('servicesDoneId', 'Fill at least one "serviceDoneId"!').isArray({ min: 1 }),
+      body('servicesDoneId.*', 'Fill a correct "id" on "serviceDoneId"!').isString(),
     ];
   }
 
@@ -25,13 +25,13 @@ export class AddServiceOrderOnOrdersPackController implements IController {
 
     const {
       date,
-      servicesDoneIds,
+      servicesDoneId,
       image,
     } = request.body;
 
     const result = await this.usecase.execute(id, {
       date,
-      servicesDoneIds,
+      servicesDoneId,
       image,
     });
 

@@ -4,8 +4,8 @@ import { ServiceOrder } from './ServiceOrder';
 export type OrdersPack = {
   id?: string;
   customer: string;
-  services?: ServiceOrder[];
-  servicesId?: string[];
+  serviceOrders?: ServiceOrder[];
+  serviceOrdersId?: string[];
   servicesCount: {
     service?: Service;
     serviceId: string;

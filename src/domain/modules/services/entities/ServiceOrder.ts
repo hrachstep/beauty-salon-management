@@ -3,7 +3,7 @@ import { Service } from './Service';
 export type ServiceOrder = {
   id?: string;
   customer?: string;
-  servicesDoneIds: string[];
+  servicesDoneId: string[];
   servicesDone?: Service[];
   date: Date;
   price?: number;

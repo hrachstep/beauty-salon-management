@@ -35,7 +35,7 @@ describe('Create Service Order Controller', () => {
       .set(authHeaders)
       .send({
         price: 45,
-        servicesDoneIds: ['1234', '5678'],
+        servicesDoneId: ['1234', '5678'],
         date: new Date(),
       });
 
@@ -48,7 +48,7 @@ describe('Create Service Order Controller', () => {
       .set(authHeaders)
       .send({
         customer: 'Fake Name',
-        servicesDoneIds: ['1234', '5678'],
+        servicesDoneId: ['1234', '5678'],
         date: new Date(),
       });
 
@@ -60,7 +60,7 @@ describe('Create Service Order Controller', () => {
       .post(route)
       .send({
         customer: 'Fake Name',
-        servicesDoneIds: ['1234', '5678'],
+        servicesDoneId: ['1234', '5678'],
         date: new Date(),
       });
 
@@ -74,7 +74,7 @@ describe('Create Service Order Controller', () => {
       .send({
         customer: 'Fake Name',
         price: 45,
-        servicesDoneIds: ['1234', '5678'],
+        servicesDoneId: ['1234', '5678'],
         date: 'teste',
       });
 
@@ -88,7 +88,7 @@ describe('Create Service Order Controller', () => {
       .send({
         customer: 'Fake Name',
         price: 45,
-        servicesDoneIds: [service.id],
+        servicesDoneId: [service.id],
         date: '2021-09-03',
       });
 

@@ -14,7 +14,7 @@ describe('List Service Order by Id', () => {
     id: '12345',
     isFromPack: false,
     price: 45,
-    servicesDoneIds: ['5689', '56684'],
+    servicesDoneId: ['5689', '56684'],
   };
 
   beforeEach(() => {

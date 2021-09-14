@@ -27,7 +27,7 @@ describe('Add Service Order on Orders Pack', () => {
         serviceId: '5678',
       },
     ],
-    services: [],
+    serviceOrders: [],
   };
 
   beforeEach(() => {
@@ -76,19 +76,19 @@ describe('Add Service Order on Orders Pack', () => {
   it('should add a service on a existent services pack', async () => {
     const pack = await usecase.execute('123', {
       date: new Date(),
-      servicesDoneIds: ['1234'],
+      servicesDoneId: ['1234'],
     });
 
     expect(pack.id).toBeTruthy();
     expect(pack.customer).toBeTruthy();
-    expect(pack.services[pack.services.length - 1].id).toBeTruthy();
+    expect(pack.serviceOrders[0].id).toBeTruthy();
   });
 
   it('should not add a service without services done', async () => {
     expect(async () => {
       await usecase.execute('123', {
         date: new Date(),
-        servicesDoneIds: [],
+        servicesDoneId: [],
       });
     }).rejects.toBeInstanceOf(ApiError);
   });
@@ -96,11 +96,11 @@ describe('Add Service Order on Orders Pack', () => {
   it('should not add service if there\'s not services remain', async () => {
     const newMockPack: OrdersPack = {
       ...mockPack,
-      services: [
-        { date: new Date(), servicesDoneIds: ['5689', '1234'] },
-        { date: new Date(), servicesDoneIds: ['5689'] },
-        { date: new Date(), servicesDoneIds: ['5689', '1234'] },
-        { date: new Date(), servicesDoneIds: ['5689'] },
+      serviceOrders: [
+        { date: new Date(), servicesDoneId: ['5689', '1234'] },
+        { date: new Date(), servicesDoneId: ['5689'] },
+        { date: new Date(), servicesDoneId: ['5689', '1234'] },
+        { date: new Date(), servicesDoneId: ['5689'] },
       ],
     };
 
@@ -115,7 +115,7 @@ describe('Add Service Order on Orders Pack', () => {
     expect(async () => {
       await usecase.execute('123', {
         date: new Date(),
-        servicesDoneIds: ['5689'],
+        servicesDoneId: ['5689'],
       });
     }).rejects.toBeInstanceOf(ApiError);
   });

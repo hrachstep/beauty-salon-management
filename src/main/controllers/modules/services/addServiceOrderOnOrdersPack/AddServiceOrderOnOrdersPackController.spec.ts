@@ -29,7 +29,7 @@ describe('Add Service Order on Orders Pack', () => {
     let response = await request(app)
       .post('/services')
       .set(authHeaders)
-      .send({ name: 'Fake Random Name' });
+      .send({ name: 'Fake Name' });
 
     service = response.body;
 
@@ -62,19 +62,19 @@ describe('Add Service Order on Orders Pack', () => {
       .set(authHeaders)
       .send({
         date: 'invalid date',
-        servicesDoneIds: [service.id],
+        servicesDoneId: [service.id],
       });
 
     expect(response.statusCode).toBe(400);
   });
 
-  it('should send status 400 when "servicesDoneIds" is invalid', async () => {
+  it('should send status 400 when "servicesDoneId" is invalid', async () => {
     const response = await request(app)
       .post(route(pack.id))
       .set(authHeaders)
       .send({
         date: '2021-09-04',
-        servicesDoneIds: [],
+        servicesDoneId: [],
       });
 
     expect(response.statusCode).toBe(400);
@@ -85,7 +85,7 @@ describe('Add Service Order on Orders Pack', () => {
       .post(route(pack.id))
       .send({
         date: '2021-09-04',
-        servicesDoneIds: [],
+        servicesDoneId: [],
       });
 
     expect(response.statusCode).toBe(401);
@@ -97,7 +97,7 @@ describe('Add Service Order on Orders Pack', () => {
       .set(authHeaders)
       .send({
         date: '2021-09-04',
-        servicesDoneIds: [service.id],
+        servicesDoneId: [service.id],
       });
 
     const { id } = response.body;

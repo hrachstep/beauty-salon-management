@@ -43,7 +43,7 @@ describe('Create Service Order', () => {
     const service = await usecase.execute({
       customer: 'Débora',
       date: new Date(),
-      servicesDoneIds: ['1234'],
+      servicesDoneId: ['1234'],
       price: 25,
     });
 
@@ -55,7 +55,7 @@ describe('Create Service Order', () => {
     const service = await usecase.execute({
       customer: 'Débora',
       date: new Date(),
-      servicesDoneIds: ['1234'],
+      servicesDoneId: ['1234'],
       price: 45,
     });
 
@@ -74,7 +74,7 @@ describe('Create Service Order', () => {
       await usecase.execute({
         customer: 'Débora',
         date: new Date(),
-        servicesDoneIds: ['1234'],
+        servicesDoneId: ['1234'],
         price: 45,
       });
     }).rejects.toBeInstanceOf(ApiError);
@@ -85,7 +85,7 @@ describe('Create Service Order', () => {
       await usecase.execute({
         customer: 'Débora',
         date: new Date(),
-        servicesDoneIds: [],
+        servicesDoneId: [],
         price: 45,
       });
     }).rejects.toBeInstanceOf(ApiError);
@@ -95,7 +95,7 @@ describe('Create Service Order', () => {
     const service = await usecase.execute({
       customer: 'Débora',
       date: new Date(),
-      servicesDoneIds: ['1234'],
+      servicesDoneId: ['1234'],
       price: 45,
     });
 

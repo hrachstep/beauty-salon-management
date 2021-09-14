@@ -39,7 +39,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
   async create({
     id,
     customer,
-    servicesDoneIds,
+    servicesDoneId,
     price,
     date,
     isFromPack,
@@ -48,7 +48,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
     await setDoc(doc(this.table, id), {
       id,
       customer,
-      servicesDoneIds,
+      servicesDoneId,
       price,
       date,
       isFromPack,
@@ -58,8 +58,8 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
     return {
       id,
       customer,
-      servicesDoneIds,
-      servicesDone: await this.serviceRepository.findByIds(servicesDoneIds),
+      servicesDoneId,
+      servicesDone: await this.serviceRepository.findByIds(servicesDoneId),
       price,
       date,
       isFromPack,
@@ -70,7 +70,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
   async update({
     id,
     customer,
-    servicesDoneIds,
+    servicesDoneId,
     price,
     date,
     isFromPack,
@@ -79,7 +79,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
     await setDoc(doc(this.table, id), {
       id,
       customer,
-      servicesDoneIds,
+      servicesDoneId,
       price,
       date,
       isFromPack,
@@ -89,8 +89,8 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
     return {
       id,
       customer,
-      servicesDoneIds,
-      servicesDone: await this.serviceRepository.findByIds(servicesDoneIds),
+      servicesDoneId,
+      servicesDone: await this.serviceRepository.findByIds(servicesDoneId),
       price,
       date,
       isFromPack,
@@ -108,7 +108,7 @@ export class ServiceOrderRepository implements IServiceOrderRepository {
   ): Promise<ServiceOrder> {
     const data = snapshot.data();
 
-    const servicesDone = await this.serviceRepository.findByIds(data.servicesDoneIds);
+    const servicesDone = await this.serviceRepository.findByIds(data.servicesDoneId);
 
     return {
       ...data,

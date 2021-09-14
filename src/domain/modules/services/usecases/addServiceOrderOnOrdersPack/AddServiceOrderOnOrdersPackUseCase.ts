@@ -21,7 +21,7 @@ export class AddServiceOrderOnOrdersPackUseCase {
     private serviceOrdersRepository: IServiceOrderRepository,
 
     @inject('OrdersPackRepository')
-    private OrdersPackRepository: IOrdersPackRepository,
+    private ordersPackRepository: IOrdersPackRepository,
   ) {
     this.createServiceOrderUseCase = new CreateServiceOrderUseCase(
       this.serviceRepository,
@@ -31,44 +31,45 @@ export class AddServiceOrderOnOrdersPackUseCase {
 
   async execute(packId: string, {
     date,
-    servicesDoneIds,
+    servicesDoneId,
     image,
   }: ServiceOrder): Promise<OrdersPack> {
-    if (!servicesDoneIds?.length) throw new ApiError('No Services Done passed!');
+    if (!servicesDoneId?.length) throw new ApiError('No Services Done passed!');
 
-    const pack = await this.OrdersPackRepository.findById(packId);
-    if (!pack) throw new ApiError('No Services Pack found with this id!');
+    const pack = await this.ordersPackRepository.findById(packId);
 
-    const countServicesToDo = pack
+    if (!pack) throw new ApiError('No Orders Pack found with this id!');
+
+    const servicesCount = pack
       .servicesCount?.reduce((total, service) => total + service.quantity, 0);
 
-    const countServicesDone = pack
-      .services?.reduce((total, service) => total + service?.servicesDoneIds?.length, 0);
+    const ordersCount = pack
+      .serviceOrders?.reduce((total, service) => total + service?.servicesDoneId?.length, 0);
 
-    if (countServicesDone + servicesDoneIds.length > countServicesToDo) throw new ApiError('No Services remaining!');
+    if (ordersCount + servicesDoneId.length > servicesCount) throw new ApiError('No Services to do remaining!');
 
-    const service = await this.createServiceOrderUseCase.execute({
+    const serviceOrder = await this.createServiceOrderUseCase.execute({
       customer: pack.customer,
       date,
-      servicesDoneIds,
+      servicesDoneId,
       price: 0,
       isFromPack: true,
       image,
     });
 
-    const updatedPack = await this.OrdersPackRepository.update({
+    const updatedPack = await this.ordersPackRepository.update({
       ...pack,
-      servicesId: [
-        ...pack.servicesId ?? [],
-        service.id,
+      serviceOrdersId: [
+        serviceOrder.id,
+        ...pack.serviceOrdersId ?? [],
       ],
     });
 
     return {
       ...updatedPack,
-      services: [
-        ...updatedPack.services,
-        service,
+      serviceOrders: [
+        serviceOrder,
+        ...updatedPack.serviceOrders,
       ],
     };
   }

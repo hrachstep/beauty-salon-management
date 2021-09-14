@@ -16,7 +16,7 @@ export class CreateServiceOrderController implements IController {
     return [
       body('customer', 'Fill the customer name!').isString(),
       body('date', 'Fill correct date!').isDate(),
-      body('servicesDoneIds', 'Fill at least one service type done!').isArray({ min: 1 }),
+      body('servicesDoneId', 'Fill at least one service type done!').isArray({ min: 1 }),
       body('price', 'Fill the price\'s service!').isNumeric(),
     ];
   }
@@ -25,7 +25,7 @@ export class CreateServiceOrderController implements IController {
     const {
       customer,
       date,
-      servicesDoneIds,
+      servicesDoneId,
       price,
       image,
     } = request.body;
@@ -33,7 +33,7 @@ export class CreateServiceOrderController implements IController {
     const result = await this.usecase.execute({
       customer,
       date,
-      servicesDoneIds,
+      servicesDoneId,
       price,
       image,
     });
