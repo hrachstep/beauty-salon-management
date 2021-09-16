@@ -40,6 +40,39 @@ describe('List ServiceOrders', () => {
     const result = await useCase.execute({ month: date });
 
     expect(result).toHaveLength(2);
-    expect(serviceorderRepository.findByMonth).toHaveBeenCalledWith(date);
+    expect(serviceorderRepository.findByMonth).toHaveBeenCalledWith({
+      month: date,
+      page: 1,
+      limit: 10,
+    });
+  });
+
+  it('should call repository with page 1 and limit 10 by default', async () => {
+    await useCase.execute({});
+
+    expect(serviceorderRepository.findAll).toHaveBeenCalledWith({
+      page: 1,
+      limit: 10,
+    });
+  });
+
+  it('should call repository with passed page and limit', async () => {
+    await useCase.execute({ page: 2, limit: 20 });
+
+    expect(serviceorderRepository.findAll).toHaveBeenCalledWith({
+      page: 2,
+      limit: 20,
+    });
+  });
+
+  it('should call repository with passed page,limit and month', async () => {
+    const date = new Date();
+    await useCase.execute({ page: 2, limit: 20, month: date });
+
+    expect(serviceorderRepository.findByMonth).toHaveBeenCalledWith({
+      page: 2,
+      limit: 20,
+      month: date,
+    });
   });
 });
