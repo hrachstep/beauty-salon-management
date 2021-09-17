@@ -7,10 +7,12 @@ import {
   Firestore,
   getDoc,
   getDocs,
+  limit,
   query,
   QueryDocumentSnapshot,
   QuerySnapshot,
   setDoc,
+  startAt,
   where,
 } from 'firebase/firestore';
 import { inject, injectable } from 'tsyringe';
@@ -19,6 +21,8 @@ import { OrdersPack } from '@domain/modules/services/entities/OrdersPack';
 import { IOrdersPackRepository } from '@domain/modules/services/interfaces/IOrdersPackRepository';
 import { IServiceOrderRepository } from '@domain/modules/services/interfaces/IServiceOrderRepository';
 import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { FindByMonthProps } from '@shared/types/findByMonth';
+import { PaginationProps } from '@shared/types/pagination';
 
 import { Firebase } from '../shared/Firebase';
 
@@ -102,19 +106,65 @@ export class OrdersPackRepository implements IOrdersPackRepository {
     return id;
   }
 
-  async findAll(): Promise<OrdersPack[]> {
-    const snapshot = await getDocs(query(this.table));
+  async findAll({ page, limit: pageSize }: PaginationProps): Promise<OrdersPack[]> {
+    const offsetSize = pageSize * (page - 1) + 1;
+
+    const allDocs = await getDocs(
+      query(
+        this.table,
+        limit(offsetSize),
+      ),
+    );
+
+    if (!allDocs.docs?.length || allDocs.docs?.length < offsetSize) return [];
+
+    const lastVisible = allDocs.docs[allDocs.docs.length - 1];
+
+    const snapshot = await getDocs(
+      query(
+        this.table,
+        startAt(lastVisible),
+        limit(pageSize),
+      ),
+    );
 
     if (snapshot.empty) return [];
 
     return this.convertSnapshotToPackList(snapshot);
   }
 
-  async findByMonth(date: Date): Promise<OrdersPack[]> {
+  async findByMonth({
+    page,
+    month: date,
+    limit: pageSize,
+  }: FindByMonthProps): Promise<OrdersPack[]> {
     const firstDay = new Date(date.getFullYear(), date.getMonth(), 1);
     const lastDay = new Date(date.getFullYear(), date.getMonth() + 1, 0);
 
-    const snapshot = await getDocs(query(this.table, where('date', '>=', firstDay), where('date', '<=', lastDay)));
+    const offsetSize = pageSize * (page - 1) + 1;
+
+    const allDocs = await getDocs(
+      query(
+        this.table,
+        where('date', '>=', firstDay),
+        where('date', '<=', lastDay),
+        limit(offsetSize),
+      ),
+    );
+
+    if (!allDocs.docs?.length || allDocs.docs?.length < offsetSize) return [];
+
+    const lastVisible = allDocs.docs[allDocs.docs.length - 1];
+
+    const snapshot = await getDocs(
+      query(
+        this.table,
+        where('date', '>=', firstDay),
+        where('date', '<=', lastDay),
+        startAt(lastVisible),
+        limit(pageSize),
+      ),
+    );
 
     if (snapshot.empty) return [];
 
