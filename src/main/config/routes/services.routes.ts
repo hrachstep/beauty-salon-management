@@ -11,7 +11,10 @@ const deleteServiceController = new DeleteServiceController();
 
 const router = Router();
 
-router.get('/', listServicesController.handle.bind(listServicesController));
+router.get('/',
+  listServicesController.validate(),
+  checkErrorMiddleware,
+  listServicesController.handle.bind(listServicesController));
 
 router.post('/',
   createServiceController.validate(),
