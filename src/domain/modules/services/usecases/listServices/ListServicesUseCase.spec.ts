@@ -27,8 +27,26 @@ describe('List Services', () => {
   });
 
   it('should return all services', async () => {
-    const result = await useCase.execute();
+    const result = await useCase.execute({});
     expect(result).toHaveLength(5);
     expect(repository.findAll).toHaveBeenCalled();
+  });
+
+  it('should call repository "findAll" with page 1 and limit 10 by default', async () => {
+    await useCase.execute({});
+
+    expect(repository.findAll).toHaveBeenCalledWith({
+      page: 1,
+      limit: 10,
+    });
+  });
+
+  it('should call repository "findAll" with passed page and limit params', async () => {
+    await useCase.execute({ page: 3, limit: 8 });
+
+    expect(repository.findAll).toHaveBeenCalledWith({
+      page: 3,
+      limit: 8,
+    });
   });
 });

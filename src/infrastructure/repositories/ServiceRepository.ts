@@ -9,12 +9,14 @@ import {
   limit,
   query,
   setDoc,
+  startAt,
   where,
 } from 'firebase/firestore';
 import { injectable } from 'tsyringe';
 
 import { Service } from '@domain/modules/services/entities/Service';
 import { IServiceRepository } from '@domain/modules/services/interfaces/IServiceRepository';
+import { PaginationProps } from '@shared/types/pagination';
 
 import { Firebase } from '../shared/Firebase';
 
@@ -53,8 +55,27 @@ export class ServiceRepository implements IServiceRepository {
     return id;
   }
 
-  async findAll(): Promise<Service[]> {
-    const snapshot = await getDocs(query(this.table));
+  async findAll({ page, limit: pageSize }: PaginationProps): Promise<Service[]> {
+    const offsetSize = pageSize * (page - 1) + 1;
+
+    const allDocs = await getDocs(
+      query(
+        this.table,
+        limit(offsetSize),
+      ),
+    );
+
+    if (!allDocs.docs?.length || allDocs.docs?.length < offsetSize) return [];
+
+    const lastVisible = allDocs.docs[allDocs.docs.length - 1];
+
+    const snapshot = await getDocs(
+      query(
+        this.table,
+        startAt(lastVisible),
+        limit(pageSize),
+      ),
+    );
 
     if (snapshot.empty) return [];
 
